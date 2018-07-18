@@ -19,31 +19,11 @@ typedef struct {
     int momentum;
     int output_layer_size;
     int output_activation_function;
-} training_parameters;
-
-typedef struct {
-    char* filename;
     int sample_size;
     int feature_size;
-} data_parameters;
+    double** data;
+} parameters;
 
-void MLPClassifier(training_parameters* train_params, data_parameters* data_params) {
-    int rows = data_params->sample_size;
-    int cols = data_params->feature_size;
-
-    // Create 2D array memory for the dataset
-    double** data = (double**)malloc(rows * sizeof(double*));
-    int i;
-    for (i = 0; i < rows; i++)
-        data[i] = (double*)malloc(cols * sizeof(double));
-
-    // Read the dataset from the csv into the 2D array
-    read_csv(data_params->filename, rows, cols, data);
-
+void MLPClassifier(parameters* params) {
     
-
-    // Free the allocated memory
-    for (i = 0; i < rows; i++)
-        free(data[i]);
-    free(data);
 }
