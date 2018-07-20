@@ -10,7 +10,7 @@ GitHub: https://github.com/manoharmukku/multilayer-perceptron-in-c
 
 typedef struct {
     int n_hidden;
-    int* hidden_layer_sizes;
+    int* hidden_layers_size;
     int hidden_activation_function;
     float regularization_parameter;
     int n_iterations_max;
@@ -46,43 +46,43 @@ int main(int argc, char** argv) {
     }
 
     // Create memory for training parameters struct
-    parameters* params = (parameters*)malloc(sizeof(parameters));
+    parameters* param = (parameters*)malloc(sizeof(parameters));
 
     // Number of hidden layers
-    params->n_hidden = atoi(argv[1]);
+    param->n_hidden = atoi(argv[1]);
     // Sanity check of number of hidden layers
-    if (params->n_hidden < 0) {
+    if (param->n_hidden < 0) {
         printf("Error: Number of hidden layers should be >= 0\n");
         exit(0);
     }
 
     // Size of each hidden layer
-    params->hidden_layer_sizes = (int*)malloc(params->n_hidden * sizeof(int));
+    param->hidden_layers_size = (int*)malloc(param->n_hidden * sizeof(int));
     int i;
     char* tok;
-    for (i = 0, tok = strtok(argv[2], ","); tok = strtok(NULL, ",") && i < params->n_hidden; i++) {
-        params->hidden_layer_sizes[i] = atoi(tok);
+    for (i = 0, tok = strtok(argv[2], ","); tok = strtok(NULL, ",") && i < param->n_hidden; i++) {
+        param->hidden_layers_size[i] = atoi(tok);
         // Sanity check of size of hidden layer
-        if (params->hidden_layer_sizes[i] <= 0) {
+        if (param->hidden_layers_size[i] <= 0) {
             printf("Error: Hidden layer sizes should be positive\n");
             exit(0);
         }
     }
 
     // Hidden activation function
-    params->hidden_activation_function;
+    param->hidden_activation_function;
     switch (argv[3]) {
         case "identity":
-            params->hidden_activation_function = 1;
+            param->hidden_activation_function = 1;
             break;
         case "sigmoid":
-            params->hidden_activation_function = 2;
+            param->hidden_activation_function = 2;
             break;
         case "tanh":
-            params->hidden_activation_function = 3;
+            param->hidden_activation_function = 3;
             break;
         case "relu":
-            params->hidden_activation_function = 4;
+            param->hidden_activation_function = 4;
             break;
         default:
             printf("Error: Invalid value for hidden activation function\n");
@@ -92,39 +92,39 @@ int main(int argc, char** argv) {
     }
 
     // L2 Regularization parameter
-    params->regularization_parameter = atoi(argv[4]);
+    param->regularization_parameter = atoi(argv[4]);
 
     // Max. number of iterations
-    params->n_iterations_max = atoi(argv[5]);
-    if (params->n_iterations_max <= 0) {
+    param->n_iterations_max = atoi(argv[5]);
+    if (param->n_iterations_max <= 0) {
         printf("Max. number of iterations value should be positive\n");
         exit(0);
     }
 
     // Momentum
-    params->momentum = atoi(argv[6]);
+    param->momentum = atoi(argv[6]);
 
     // Output layer size
-    params->output_layer_size = atoi(argv[7]);
-    if (params->output_layer_size <= 0) {
+    param->output_layer_size = atoi(argv[7]);
+    if (param->output_layer_size <= 0) {
         printf("Output layer size should be positive\n");
         exit(0);
     }
 
     // Output activation function
-    params->output_activation_function;
+    param->output_activation_function;
     switch (argv[8]) {
         case "identity":
-            params->output_activation_function = 1;
+            param->output_activation_function = 1;
             break;
         case "sigmoid":
-            params->output_activation_function = 2;
+            param->output_activation_function = 2;
             break;
         case "tanh":
-            params->output_activation_function = 3;
+            param->output_activation_function = 3;
             break;
         case "relu":
-            params->output_activation_function = 4;
+            param->output_activation_function = 4;
             break;
         default:
             printf("Error: Invalid value for output activation function\n");
@@ -135,26 +135,26 @@ int main(int argc, char** argv) {
 
     // Get the parameters of the dataset
     char* filename = argv[9];
-    params->sample_size = atoi(argv[10]);
-    params->feature_size = atoi(argv[11]);
+    param->sample_size = atoi(argv[10]);
+    param->feature_size = atoi(argv[11]);
 
     // Create 2D array memory for the dataset
-    params->data = (double**)malloc(params->sample_size * sizeof(double*));
+    param->data = (double**)malloc(param->sample_size * sizeof(double*));
     int i;
-    for (i = 0; i < params->sample_size; i++)
-        params->data[i] = (double*)malloc(params->feature_size * sizeof(double));
+    for (i = 0; i < param->sample_size; i++)
+        param->data[i] = (double*)malloc(param->feature_size * sizeof(double));
 
     // Read the dataset from the csv into the 2D array
-    read_csv(filename, params->sample_size, params->feature_size, data);
+    read_csv(filename, param->sample_size, param->feature_size, param->data);
 
-    
+
 
     // Free the allocated memory
-    for (i = 0; i < params->sample_size; i++)
-        free(params->data[i]);
-    free(params->data);
-    free(params->hidden_layer_sizes);
-    free(params);
+    for (i = 0; i < param->sample_size; i++)
+        free(param->data[i]);
+    free(param->data);
+    free(param->hidden_layers_size);
+    free(param);
 
     return 0;
 }
