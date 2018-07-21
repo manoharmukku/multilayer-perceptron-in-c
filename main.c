@@ -7,11 +7,12 @@ GitHub: https://github.com/manoharmukku/multilayer-perceptron-in-c
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct {
     int n_hidden;
     int* hidden_layers_size;
-    int hidden_activation_function;
+    int* hidden_activation_functions;
     float regularization_parameter;
     int n_iterations_max;
     int momentum;
@@ -27,12 +28,12 @@ int main(int argc, char** argv) {
     argv[0]: Executable file name Ex: a.out
     argv[1]: Number of hidden layers Ex: 3
     argv[2]: Size of each hidden layer separated by comma Ex: 4,5,5
-    argv[3]: Hidden activation function (identity - 1, sigmoid - 2, tanh - 3, relu - 4)
+    argv[3]: Hidden activation functions (identity - 1, sigmoid - 2, tanh - 3, relu - 4)
     argv[4]: Alpha (L2 Regularization parameter value)
     argv[5]: Maximum number of iterations
     argv[6]: Momentum for gradient descent update
     argv[7]: Number of units in output layer
-    argv[8]: Output activation function (identity - 1, sigmoid - 2, tanh - 3, relu - 4)
+    argv[8]: Output activation function (identity - 1, sigmoid - 2, tanh - 3, relu - 4, softmax - 5)
     argv[9]: Name of the csv file containing the dataset
     argv[10]: Number of rows or samples in the dataset
     argv[11]: Number of features including the output variable in the dataset
@@ -40,7 +41,7 @@ int main(int argc, char** argv) {
 
     // Sanity check of command line arguments
     if (argc <= 1) {
-        printf("Usage: ./a.out 'No. of hidden layers' 'Size of each hidden layer separated by comma' 'Hidden activation'\n
+        printf("Usage: ./a.out 'No. of hidden layers' 'Size of each hidden layer separated by comma' 'Hidden activations separated by comma'\n
             'Alpha' 'Max iterations' 'Momentum' 'Size of output layer' 'Output activation' 'Filename' 'Rows' 'Cols'\n");
         exit(0);
     }
@@ -69,26 +70,28 @@ int main(int argc, char** argv) {
         }
     }
 
-    // Hidden activation function
-    param->hidden_activation_function;
-    switch (argv[3]) {
-        case "identity":
-            param->hidden_activation_function = 1;
-            break;
-        case "sigmoid":
-            param->hidden_activation_function = 2;
-            break;
-        case "tanh":
-            param->hidden_activation_function = 3;
-            break;
-        case "relu":
-            param->hidden_activation_function = 4;
-            break;
-        default:
-            printf("Error: Invalid value for hidden activation function\n");
-            printf("Input either identity or sigmoid or tanh or relu for hidden activation function\n");
-            exit(0);
-            break;
+    // Hidden activation functions - Activation functions for each hidden layer
+    param->hidden_activation_functions = (int*)malloc(n_hidden * sizeof(int));
+    for (i = 0, tok = strtok(argv[3], ","); tok = strtok(NULL, ",") && i < n_hidden; i++) {
+        switch (tok) {
+            case "identity":
+                param->hidden_activation_functions[i] = 1;
+                break;
+            case "sigmoid":
+                param->hidden_activation_functions[i] = 2;
+                break;
+            case "tanh":
+                param->hidden_activation_functions[i] = 3;
+                break;
+            case "relu":
+                param->hidden_activation_functions[i] = 4;
+                break;
+            default:
+                printf("Error: Invalid value for hidden activation function\n");
+                printf("Input either identity or sigmoid or tanh or relu for hidden activation function\n");
+                exit(0);
+                break;
+        }
     }
 
     // L2 Regularization parameter
@@ -112,7 +115,6 @@ int main(int argc, char** argv) {
     }
 
     // Output activation function
-    param->output_activation_function;
     switch (argv[8]) {
         case "identity":
             param->output_activation_function = 1;
@@ -126,9 +128,12 @@ int main(int argc, char** argv) {
         case "relu":
             param->output_activation_function = 4;
             break;
+        case "softmax":
+            param->output_activation_function = 5;
+            break;
         default:
             printf("Error: Invalid value for output activation function\n");
-            printf("Input either identity or sigmoid or tanh or relu for output activation function\n");
+            printf("Input either identity or sigmoid or tanh or relu or softmax for output activation function\n");
             exit(0);
             break;
     }
@@ -147,12 +152,13 @@ int main(int argc, char** argv) {
     // Read the dataset from the csv into the 2D array
     read_csv(filename, param->sample_size, param->feature_size, param->data);
 
+    
 
-
-    // Free the allocated memory
+    // Free the memory allocated in Heap
     for (i = 0; i < param->sample_size; i++)
         free(param->data[i]);
     free(param->data);
+    free(param->hidden_activation_functions);
     free(param->hidden_layers_size);
     free(param);
 
