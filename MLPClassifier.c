@@ -37,9 +37,9 @@ void initialize_weights(int n_layers, int* layer_sizes, double*** theta) {
     // Random initialization between [-epsilon[i], epsilon[i]] for theta[i]
     int j, k;
     for (i = 0; i < n_layers-1; i++)
-        for (j = 0; j < layer_sizes[i+1]; j++)
-            for (k = 0; k < layer_sizes[i] + 1; k++)
-                theta[i][j][k] = -epsilon[i] + (rand() / (RAND_MAX / (2.0 * epsilon[i])));
+        for (j = 0; j < layer_sizes[i]+1; j++)
+            for (k = 0; k < layer_sizes[i+1]; k++)
+                theta[i][j][k] = -epsilon[i] + ((double)rand() / ((double)RAND_MAX / (2.0 * epsilon[i])));
 
     // Free the memory allocated in Heap for epsilon array
     free(epsilon);
@@ -62,25 +62,24 @@ void MLPClassifier(parameters* param) {
     // theta is a pointer to the array of 2D arrays between the layers
     double*** theta = (double***)calloc((n_layers - 1), sizeof(double**));
 
-    // Each 2D array between two layers i and i+1 is of size (layer_size[i+1] x (layer_size[i]+1))
+    // Each 2D array between two layers i and i+1 is of size ((layer_size[i]+1) x layer_size[i+1])
+    // The weight matrix includes weights for the bias terms too
     for (i = 0; i < n_layers - 1; i++)
-        theta[i] = (double**)calloc(layer_sizes[i+1], sizeof(double*));
+        theta[i] = (double**)calloc(layer_sizes[i]+1, sizeof(double*));
 
     int j;
     for (i = 0; i < n_layers - 1; i++)
-        for (j = 0; j < layer_sizes[i+1]; j++)
-            theta[i][j] = (double*)calloc((layer_sizes[i] + 1), sizeof(double));
+        for (j = 0; j < layer_sizes[i]+1; j++)
+            theta[i][j] = (double*)calloc(layer_sizes[i+1], sizeof(double));
 
     // Initialize the weights
     initialize_weights(n_layers, layer_sizes, theta);
 
-    for (i = 0; i < param->n_iterations_max; i++) {
-
-    }
+    
 
     // Free the memory allocated in Heap
     for (i = 0; i < n_layers - 1; i++)
-        for (j = 0; j < layer_sizes[i+1]; j++)
+        for (j = 0; j < layer_sizes[i]+1; j++)
             free(theta[i][j]);
 
     for (i = 0; i < n_layers - 1; i++)
