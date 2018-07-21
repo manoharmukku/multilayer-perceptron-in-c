@@ -14,7 +14,7 @@ GitHub: https://github.com/manoharmukku/multilayer-perceptron-in-c
 typedef struct {
     int n_hidden;
     int* hidden_layers_size;
-    int hidden_activation_function;
+    int* hidden_activation_functions;
     float regularization_parameter;
     int n_iterations_max;
     int momentum;
@@ -28,11 +28,21 @@ typedef struct {
 void initialize_weights(int n_layers, int* layer_sizes, double*** theta) {
     srand(time(0));
 
-    int i, j, k;
-    for (i = 0; i < n_layers - 1; i++)
+    // epsilon = sqrt(6/(layer_size[i] + layer_size[i+1])) used for random initialization
+    double* epsilon = (double*)calloc(n_layers-1, sizeof(double));
+    int i;
+    for (i = 0; i < n_layers-1; i++)
+        epsilon[i] = sqrt(6.0 / (layer_sizes[i] + layer_sizes[i+1]));
+
+    // Random initialization between [-epsilon[i], epsilon[i]] for theta[i]
+    int j, k;
+    for (i = 0; i < n_layers-1; i++)
         for (j = 0; j < layer_sizes[i+1]; j++)
             for (k = 0; k < layer_sizes[i] + 1; k++)
-                theta[i][j][k] = rand() / (double)RAND_MAX;
+                theta[i][j][k] = -epsilon[i] + (rand() / (RAND_MAX / (2.0 * epsilon[i])));
+
+    // Free the memory allocated in Heap for epsilon array
+    free(epsilon);
 }
 
 void MLPClassifier(parameters* param) {
@@ -47,7 +57,6 @@ void MLPClassifier(parameters* param) {
     int i;
     for (i = 1; i < n_layers-1 ; i++)
         layer_sizes[i] = param->hidden_layers_size[i-1];
-
 
     // Create memory for the weight matrices between layers
     // theta is a pointer to the array of 2D arrays between the layers
@@ -66,7 +75,7 @@ void MLPClassifier(parameters* param) {
     initialize_weights(n_layers, layer_sizes, theta);
 
     for (i = 0; i < param->n_iterations_max; i++) {
-        
+
     }
 
     // Free the memory allocated in Heap
