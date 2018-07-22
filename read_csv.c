@@ -1,7 +1,7 @@
 /*
 Author: Manohar Mukku
 Date: 18.07.2018
-Desc: Read .csv into a 2D array
+Desc: Read .csv file into a 2D array
 GitHub: https://github.com/manoharmukku/multilayer-perceptron-in-c
 */
 
@@ -22,7 +22,7 @@ void read_csv(char* filename, int rows, int cols, double** data) {
     // Create memory to read a line/row from the file
     char* line = (char*)malloc(MAX_LINE_SIZE * sizeof(char));
 
-    // Read the file and save it in data
+    // Read the file and save it in matrix 'data'
     int i, j;
     for (i = 0; fgets(line, MAX_LINE_SIZE, fp) && i < rows; i++) {
         char* tok;

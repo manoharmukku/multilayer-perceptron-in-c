@@ -72,9 +72,6 @@ void MLPClassifier(parameters* param) {
         for (j = 0; j < layer_sizes[i]+1; j++)
             theta[i][j] = (double*)calloc(layer_sizes[i+1], sizeof(double));
 
-    // Initialize the weights
-    initialize_weights(n_layers, layer_sizes, theta);
-
     // Create memory for arrays of inputs to the layers
     double** layer_inputs = (double**)calloc(n_layers, sizeof(double*));
 
@@ -86,6 +83,9 @@ void MLPClassifier(parameters* param) {
 
     for (i = 0; i < n_layers; i++)
         layer_outputs[i] = (double*)calloc(layer_sizes[i]+1, sizeof(double));
+
+    // Initialize the weights
+    initialize_weights(n_layers, layer_sizes, theta);
 
     
 
