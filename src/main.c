@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
     argv[0]: Executable file name Ex: a.out
     argv[1]: Number of hidden layers Ex: 3
     argv[2]: Size of each hidden layer separated by comma Ex: 4,5,5
-    argv[3]: Hidden activation functions (identity - 1, sigmoid - 2, tanh - 3, relu - 4)
+    argv[3]: Hidden activation functions (identity - 1, sigmoid - 2, tanh - 3, relu - 4, softmax - 5)
     argv[4]: Alpha (L2 Regularization parameter value)
     argv[5]: Maximum number of iterations
     argv[6]: Momentum for gradient descent update
@@ -86,9 +86,12 @@ int main(int argc, char** argv) {
             case "relu":
                 param->hidden_activation_functions[i] = 4;
                 break;
+            case "softmax":
+                param->hidden_activation_functions[i] = 5;
+                break;
             default:
                 printf("Error: Invalid value for hidden activation function\n");
-                printf("Input either identity or sigmoid or tanh or relu for hidden activation function\n");
+                printf("Input either identity or sigmoid or tanh or relu or softmax for hidden activation function\n");
                 exit(0);
                 break;
         }
@@ -141,6 +144,7 @@ int main(int argc, char** argv) {
     // Get the parameters of the dataset
     char* filename = argv[9];
     param->sample_size = atoi(argv[10]);
+    // Feature size = Number of input features + 1 output feature
     param->feature_size = atoi(argv[11]);
 
     // Create 2D array memory for the dataset
