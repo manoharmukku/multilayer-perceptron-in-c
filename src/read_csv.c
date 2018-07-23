@@ -22,7 +22,7 @@ void read_csv(char* filename, int rows, int cols, double** data) {
     // Create memory to read a line/row from the file
     char* line = (char*)malloc(MAX_LINE_SIZE * sizeof(char));
 
-    // Read the file and save it in matrix 'data'
+    // Read the file and save it in the matrix 'data'
     int i, j;
     for (i = 0; fgets(line, MAX_LINE_SIZE, fp) && i < rows; i++) {
         char* tok;
@@ -31,7 +31,7 @@ void read_csv(char* filename, int rows, int cols, double** data) {
         }
     }
 
-    // Free the memory
+    // Free the allocated memory in Heap for line
     free(line);
 
     // Close the file
