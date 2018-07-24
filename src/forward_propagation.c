@@ -80,8 +80,6 @@ void softmax(int n, double* input, double* output) {
         output[i+1] = exp(input[i]) / sum; // Softmax function
 }
 
-// Activation function id's (identity - 1, sigmoid - 2, tanh - 3, relu - 4, softmax - 5)
-
 void forward_propagation(parameters* param, int training_example, int n_layers, int** layer_sizes, double** layer_inputs, double** layer_outputs, double*** theta) {
     // Fill the input layer's input and output (both are equal) from data matrix with the given training example
     int i;
@@ -97,6 +95,7 @@ void forward_propagation(parameters* param, int training_example, int n_layers, 
         mat_mul(layer_outputs[i-1], theta[i-1], layer_inputs[i], layer_sizes[i-1]+1, layer_sizes[i]);
 
         // Compute layer_outputs[i]
+        // Activation functions (identity - 1, sigmoid - 2, tanh - 3, relu - 4, softmax - 5)
         if (param->hidden_activation_functions[i-1] == 1) {// identity
             identity(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
         }
@@ -121,6 +120,7 @@ void forward_propagation(parameters* param, int training_example, int n_layers, 
     // Fill the output layers's input and output
     mat_mul(layer_outputs[n_layers-2], theta[n_layers-2], layer_inputs[n_layers-1], layer_sizes[n_layers-2]+1, layer_sizes[n_layers-1]);
 
+    // Activation functions (identity - 1, sigmoid - 2, tanh - 3, relu - 4, softmax - 5)
     if (param->output_activation_functiont == 1) {// identity
         identity(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
     }
@@ -137,7 +137,7 @@ void forward_propagation(parameters* param, int training_example, int n_layers, 
         softmax(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
     }
     else {
-        printf("Forward propagation: Invalid hidden activation function\n");
+        printf("Forward propagation: Invalid output activation function\n");
         exit(0);
     }
 }
