@@ -80,7 +80,7 @@ void softmax(int n, double* input, double* output) {
         output[i+1] = exp(input[i]) / sum; // Softmax function
 }
 
-void forward_propagation(parameters* param, int training_example, int n_layers, int** layer_sizes, double** layer_inputs, double** layer_outputs, double*** theta) {
+void forward_propagation(parameters* param, int training_example, int n_layers, int** layer_sizes, double** layer_inputs, double** layer_outputs, double*** weight) {
     // Fill the input layer's input and output (both are equal) from data matrix with the given training example
     int i;
     layer_outputs[0][0] = 1; // Bias term of input layer
@@ -92,7 +92,7 @@ void forward_propagation(parameters* param, int training_example, int n_layers, 
     int j;
     for (i = 1; i < n_layers-1; i++) {
         // Compute layer_inputs[i]
-        mat_mul(layer_outputs[i-1], theta[i-1], layer_inputs[i], layer_sizes[i-1]+1, layer_sizes[i]);
+        mat_mul(layer_outputs[i-1], weight[i-1], layer_inputs[i], layer_sizes[i-1]+1, layer_sizes[i]);
 
         // Compute layer_outputs[i]
         // Activation functions (identity - 1, sigmoid - 2, tanh - 3, relu - 4, softmax - 5)
@@ -118,7 +118,7 @@ void forward_propagation(parameters* param, int training_example, int n_layers, 
     }
 
     // Fill the output layers's input and output
-    mat_mul(layer_outputs[n_layers-2], theta[n_layers-2], layer_inputs[n_layers-1], layer_sizes[n_layers-2]+1, layer_sizes[n_layers-1]);
+    mat_mul(layer_outputs[n_layers-2], weight[n_layers-2], layer_inputs[n_layers-1], layer_sizes[n_layers-2]+1, layer_sizes[n_layers-1]);
 
     // Activation functions (identity - 1, sigmoid - 2, tanh - 3, relu - 4, softmax - 5)
     if (param->output_activation_functiont == 1) {// identity
