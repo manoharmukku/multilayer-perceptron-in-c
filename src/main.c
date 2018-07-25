@@ -13,7 +13,7 @@ typedef struct {
     int n_hidden;
     int* hidden_layers_size;
     int* hidden_activation_functions;
-    float regularization_parameter;
+    double learning_rate;
     int n_iterations_max;
     int momentum;
     int output_layer_size;
@@ -98,7 +98,7 @@ int main(int argc, char** argv) {
     }
 
     // L2 Regularization parameter
-    param->regularization_parameter = atoi(argv[4]);
+    param->learning_rate = atoi(argv[4]);
 
     // Max. number of iterations
     param->n_iterations_max = atoi(argv[5]);

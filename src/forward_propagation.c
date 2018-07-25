@@ -13,7 +13,7 @@ typedef struct {
     int n_hidden;
     int* hidden_layers_size;
     int* hidden_activation_functions;
-    float regularization_parameter;
+    double learning_rate;
     int n_iterations_max;
     int momentum;
     int output_layer_size;

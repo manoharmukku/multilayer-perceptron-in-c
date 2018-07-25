@@ -9,7 +9,7 @@ typedef struct {
     int n_hidden;
     int* hidden_layers_size;
     int* hidden_activation_functions;
-    float regularization_parameter;
+    double learning_rate;
     int n_iterations_max;
     int momentum;
     int output_layer_size;
@@ -45,6 +45,8 @@ void back_propagation(parameters* param, int training_example, int n_layers, int
     for (i = 0; i < n_layers-1; i++)
         for (j = 0; j < layer_sizes[i]+1; j++)
             weight_correction[i][j] = (double*)calloc(layer_sizes[i+1], sizeof(double));
+
+
 
     // Free the memory allocated in Heap
     for (i = 0; i < n_layers - 1; i++)
