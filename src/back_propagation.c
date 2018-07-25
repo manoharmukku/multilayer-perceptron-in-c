@@ -19,6 +19,42 @@ typedef struct {
     double** data;
 } parameters;
 
+void d_identity(int layer_size, double* layer_input, double* layer_output, double* layer_derivative) {
+    int i;
+    for (i = 0; i < layer_size; i++)
+        layer_derivative[i] = 1;
+}
+
+void d_sigmoid(int layer_size, double* layer_input, double* layer_output, double* layer_derivative) {
+    int i;
+    for (i = 0; i < layer_size; i++)
+        layer_derivatie[i] = layer_output[i+1] * (1.0 - layer_output[i+1]);
+}
+
+void d_tanh(int layer_size, double* layer_input, double* layer_output, double* layer_derivative) {
+    int i;
+    for (i = 0; i < layer_size; i++)
+        layer_derivatie[i] = 1.0 - layer_output[i+1] * layer_output[i+1];
+}
+
+void d_relu(int layer_size, double* layer_input, double* layer_output, double* layer_derivative) {
+    int i;
+    for (i = 0; i < layer_size; i++) {
+        if (layer_input[i] > 0)
+            layer_derivative[i] = 1;
+        else if (layer_input[i] < 0)
+            layer_derivative[i] = 0;
+        else // derivative does not exist
+            layer_derivatie[i] = 0.5; // giving arbitrary value
+    }
+}
+
+void d_softmax(int layer_size, double* layer_input, double* layer_output, double* layer_derivative) {
+    int i;
+    for (i = 0; i < layer_size; i++)
+        layer_derivatie[i] = layer_output[i+1] * (1.0 - layer_output[i+1]);
+}
+
 void back_propagation(parameters* param, int training_example, int n_layers, int** layer_sizes, double** layer_inputs, double** layer_outputs, double*** weight) {
     /* ------------------ Expected output ----------------------------------------*/
     // Get the expected output from the data matrix
