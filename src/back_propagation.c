@@ -19,7 +19,7 @@ typedef struct {
     double** data;
 } parameters;
 
-void back_propagation(parameters* param, int training_example, int n_layers, int** layer_sizes, double** layer_inputs, double** layer_outputs, double*** theta) {
+void back_propagation(parameters* param, int training_example, int n_layers, int** layer_sizes, double** layer_inputs, double** layer_outputs, double*** weight) {
     // Get the expected output from the data matrix
     // Create memory for the expected output array
     // Initialized to zero's
@@ -32,7 +32,29 @@ void back_propagation(parameters* param, int training_example, int n_layers, int
     else 
         expected_output[param->data[training_example][param->feature_size-1] - 1] = 1;
 
-        
+    // Create memory for the weight_correction matrices between layers
+    // weight_correction is a pointer to the array of 2D arrays between the layers
+    double*** weight_correction = (double***)calloc(n_layers - 1, sizeof(double**));
+
+    // Each 2D array between two layers i and i+1 is of size ((layer_size[i]+1) x layer_size[i+1])
+    // The weight_correction matrix includes weight corrections for the bias terms too
+    for (i = 0; i < n_layers-1; i++)
+        weight_correction[i] = (double**)calloc(layer_sizes[i]+1, sizeof(double*));
+
+    int j;
+    for (i = 0; i < n_layers-1; i++)
+        for (j = 0; j < layer_sizes[i]+1; j++)
+            weight_correction[i][j] = (double*)calloc(layer_sizes[i+1], sizeof(double));
+
+    // Free the memory allocated in Heap
+    for (i = 0; i < n_layers - 1; i++)
+        for (j = 0; j < layer_sizes[i]+1; j++)
+            free(weight_correction[i][j]);
+
+    for (i = 0; i < n_layers - 1; i++)
+        free(weight_correction[i]);
+
+    free(weight_correction);
 
     free(expected_output);
 }
