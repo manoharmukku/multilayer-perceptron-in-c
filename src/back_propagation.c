@@ -144,7 +144,7 @@ void back_propagation(parameters* param, int training_example, int n_layers, int
     /* ---------------------- Weight correction ----------------------------------- */
     // Create memory for the weight_correction matrices between layers
     // weight_correction is a pointer to the array of 2D arrays between the layers
-    double*** weight_correction = (double***)calloc(n_layers - 1, sizeof(double**));
+    double*** weight_correction = (double***)calloc(n_layers-1, sizeof(double**));
 
     // Each 2D array between two layers i and i+1 is of size ((layer_size[i]+1) x layer_size[i+1])
     // The weight_correction matrix includes weight corrections for the bias terms too
@@ -164,9 +164,11 @@ void back_propagation(parameters* param, int training_example, int n_layers, int
     for (i = 0; i < n_layers; i++)
         local_gradient[i] = (double*)calloc(layer_sizes[i], sizeof(double));
 
-    /*----------- Calculate weight corrections for all weights -------------------*/
+    /*----------- Calculate weight corrections for all layers' weights -------------------*/
     // Weight correction for the output layer
-    
+    for (i = 0; i < output_layer_size; i++)
+        for (j = 0; j < layer_sizes[n_layers-2]+1; j++)
+            weight_correction[n_layers-2][j][i] = (param->learning_rate) * local_gradient[n_layers-1][i] * layer_outputs[n_layers-2][j];
 
     // Free the memory allocated in Heap
     for (i = 0; i < n_layers; i++)
