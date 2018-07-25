@@ -96,24 +96,26 @@ void forward_propagation(parameters* param, int training_example, int n_layers, 
 
         // Compute layer_outputs[i]
         // Activation functions (identity - 1, sigmoid - 2, tanh - 3, relu - 4, softmax - 5)
-        if (param->hidden_activation_functions[i-1] == 1) {// identity
-            identity(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
-        }
-        else if (param->hidden_activation_functions[i-1] == 2) {// sigmoid
-            sigmoid(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
-        }
-        else if (param->hidden_activation_functions[i-1] == 3) {// tanh
-            tanh(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
-        }
-        else if (param->hidden_activation_functions[i-1] == 4) {// relu
-            relu(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
-        }
-        else if (param->hidden_activation_functions[i-1] == 5) {// softmax
-            softmax(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
-        }
-        else {
-            printf("Forward propagation: Invalid hidden activation function\n");
-            exit(0);
+        switch (param->hidden_activation_functions[i-1]) {
+            case 1: // identity
+                identity(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
+                break;
+            case 2: // sigmoid
+                sigmoid(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
+                break;
+            case 3: // tanh
+                tanh(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
+                break;
+            case 4: // relu
+                relu(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
+                break;
+            case 5: // softmax
+                softmax(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
+                break;
+            default:
+                printf("Forward propagation: Invalid hidden activation function\n");
+                exit(0);
+                break;
         }
     }
 
@@ -121,23 +123,25 @@ void forward_propagation(parameters* param, int training_example, int n_layers, 
     mat_mul(layer_outputs[n_layers-2], weight[n_layers-2], layer_inputs[n_layers-1], layer_sizes[n_layers-2]+1, layer_sizes[n_layers-1]);
 
     // Activation functions (identity - 1, sigmoid - 2, tanh - 3, relu - 4, softmax - 5)
-    if (param->output_activation_functiont == 1) {// identity
-        identity(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
-    }
-    else if (param->output_activation_functiont == 2) {// sigmoid
-        sigmoid(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
-    }
-    else if (param->output_activation_functiont == 3) {// tanh
-        tanh(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
-    }
-    else if (param->output_activation_functiont == 4) {// relu
-        relu(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
-    }
-    else if (param->output_activation_functiont == 5) {// softmax
-        softmax(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
-    }
-    else {
-        printf("Forward propagation: Invalid output activation function\n");
-        exit(0);
+    switch (param->output_activation_function) {
+        case 1: // identity
+            identity(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
+            break;
+        case 2: // sigmoid
+            sigmoid(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
+            break;
+        case 3: // tanh
+            tanh(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
+            break;
+        case 4: // relu
+            relu(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
+            break;
+        case 5: // softmax
+            softmax(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
+            break;
+        default:
+            printf("Forward propagation: Invalid hidden activation function\n");
+            exit(0);
+            break;
     }
 }
