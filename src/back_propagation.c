@@ -260,7 +260,15 @@ void back_propagation(parameters* param, int training_example, int n_layers, int
     }
 
     /*----------------- Update the weights -------------------------------------*/
-    
+    int k;
+    for (i = 0; i < n_layers-1; i++) {
+        for (j = 0; j < layer_sizes[i]+1; j++) {
+            for (k = 0; k < layer_sizes[i+1]; k++) {
+                weight[i][j][k] -= weight_correction[i][j][k];
+            }
+        }
+    }
+
 
     // Free the memory allocated in Heap
     for (i = 0; i < n_layers; i++)
