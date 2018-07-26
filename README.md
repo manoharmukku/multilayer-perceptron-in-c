@@ -8,6 +8,6 @@
 * https://stackoverflow.com/questions/33058848/generate-a-random-double-between-1-and-1
 * https://madalinabuzau.github.io/2016/11/29/gradient-descent-on-a-softmax-cross-entropy-cost-function.html
 * http://dai.fmph.uniba.sk/courses/NN/haykin.neural-networks.3ed.2009.pdf
-* https://theclevermachine.wordpress.com/2014/09/08/derivation-derivatives-for-common-neural-network-activation-functions/
 * https://jamesmccaffrey.wordpress.com/2017/06/23/two-ways-to-deal-with-the-derivative-of-the-relu-function/
 * https://eli.thegreenplace.net/2016/the-softmax-function-and-its-derivative
+* https://theclevermachine.wordpress.com/2014/09/08/derivation-derivatives-for-common-neural-network-activation-functions/
