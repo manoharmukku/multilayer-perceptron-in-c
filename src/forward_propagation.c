@@ -5,23 +5,7 @@ Desc: Feedforward propagation
 GitHub: https://github.com/manoharmukku/multilayer-perceptron-in-c
 */
 
-#include <math.h>
-
-#define max(x, y) (x > y ? x : y)
-
-typedef struct {
-    int n_hidden;
-    int* hidden_layers_size;
-    int* hidden_activation_functions;
-    double learning_rate;
-    int n_iterations_max;
-    int momentum;
-    int output_layer_size;
-    int output_activation_function;
-    int sample_size;
-    int feature_size;
-    double** data;
-} parameters;
+#include "forward_propagation.h"
 
 void mat_mul(double* a, double** b, double* result, int n, int p) {
     // matrix a of size 1 x n (array)

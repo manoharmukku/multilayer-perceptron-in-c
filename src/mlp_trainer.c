@@ -10,20 +10,9 @@ GitHub: https://github.com/manoharmukku/multilayer-perceptron-in-c
 #include <string.h>
 #include <math.h>
 #include <time.h>
-
-typedef struct {
-    int n_hidden;
-    int* hidden_layers_size;
-    int* hidden_activation_functions;
-    double learning_rate;
-    int n_iterations_max;
-    int momentum;
-    int output_layer_size;
-    int output_activation_function;
-    int sample_size;
-    int feature_size;
-    double** data;
-} parameters;
+#include "parameters.h"
+#include "forward_propagation.h"
+#include "back_propagation.h"
 
 void initialize_weights(int n_layers, int* layer_sizes, double*** weight) {
     srand(time(0));
@@ -45,7 +34,7 @@ void initialize_weights(int n_layers, int* layer_sizes, double*** weight) {
     free(epsilon);
 }
 
-void MLPClassifier(parameters* param) {
+void mlp_trainer(parameters* param) {
     int n_layers = param->n_hidden + 2;
 
     // Save the sizes of layers in an array
@@ -60,7 +49,8 @@ void MLPClassifier(parameters* param) {
 
     // Create memory for the weight matrices between layers
     // weight is a pointer to the array of 2D arrays between the layers
-    double*** weight = (double***)calloc(n_layers - 1, sizeof(double**));
+    // Global variable
+    weight = (double***)calloc(n_layers - 1, sizeof(double**));
 
     // Each 2D array between two layers i and i+1 is of size ((layer_size[i]+1) x layer_size[i+1])
     // The weight matrix includes weights for the bias terms too
@@ -87,7 +77,19 @@ void MLPClassifier(parameters* param) {
     // Initialize the weights
     initialize_weights(n_layers, layer_sizes, weight);
 
-    
+    // Train the MLP
+    int training_example;
+    for (i = 0; i < param->n_iterations_max; i++) {
+        for (training_example = 0; training_example < param->sample_size; training_example++) {
+            // Perform forward propagation on the jth training example
+            forward_propagation(param, training_example, n_layers, layer_sizes, layer_inputs, layer_outputs, weight);
+
+            // Calculate the error
+
+            // Perform back propagation and update weights
+            back_propagation(param, training_example, n_layers, layer_sizes, layer_inputs, layer_outputs, weight);
+        }   
+    }
 
     // Free the memory allocated in Heap
     for (i = 0; i < n_layers; i++)

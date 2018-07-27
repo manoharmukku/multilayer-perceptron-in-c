@@ -8,6 +8,7 @@ GitHub: https://github.com/manoharmukku/multilayer-perceptron-in-c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "mlp_trainer.h"
 
 typedef struct {
     int n_hidden;
