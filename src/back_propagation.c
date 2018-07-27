@@ -5,21 +5,7 @@ Desc: Backpropagation in C
 GitHub: https://github.com/manoharmukku/multilayer-perceptron-in-c
 */
 
-#include <stdlib.h>
-
-typedef struct {
-    int n_hidden;
-    int* hidden_layers_size;
-    int* hidden_activation_functions;
-    double learning_rate;
-    int n_iterations_max;
-    int momentum;
-    int output_layer_size;
-    int output_activation_function;
-    int sample_size;
-    int feature_size;
-    double** data;
-} parameters;
+#include "back_propagation.h"
 
 void d_identity(int layer_size, double* layer_input, double* layer_output, double* layer_derivative) {
     int i;
