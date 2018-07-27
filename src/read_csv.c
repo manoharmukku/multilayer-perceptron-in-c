@@ -6,11 +6,7 @@ GitHub: https://github.com/manoharmukku/multilayer-perceptron-in-c
 Courtesy of amirmasoudabdol on GitHub: https://gist.github.com/amirmasoudabdol/f1efda29760b97f16e0e
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#define MAX_LINE_SIZE 1048576 // 2^20
+#include "read_csv.h"
 
 void read_csv(char* filename, int rows, int cols, double** data) {
     // Open file and perform sanity check
