@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
 
     // Sanity check of command line arguments
     if (argc <= 1) {
-        printf("Usage: ./a.out \'No. of hidden layers\' \'Size of each hidden layer separated by comma\' \'Hidden activations separated by comma\'\n \
+        printf("Usage: ./mlp \'No. of hidden layers\' \'Size of each hidden layer separated by comma\' \'Hidden activations separated by comma\'\n \
             \'Alpha\' \'Max iterations\' \'Momentum\' \'Size of output layer\' \'Output activation\' \'Filename\' \'Rows\' \'Cols\'\n");
         exit(0);
     }
@@ -134,7 +134,7 @@ int main(int argc, char** argv) {
 
     // Read the dataset from the csv into the 2D array
     read_csv(filename, param->sample_size, param->feature_size, param->data);
-    
+
     
 
     // Free the memory allocated in Heap
