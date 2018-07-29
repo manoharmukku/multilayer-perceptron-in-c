@@ -36,7 +36,7 @@ Then, go to the cloned directory, and compile the project as below:
 Then run the program with your desired parameters as below:
 
 ```
-~$ ./MLP 3 4,5,5 sigmoid,relu,tanh 3 softmax 0.01 10000 data_train.csv 1000 11
+~$ ./MLP 3 4,5,5 sigmoid,relu,tanh 3 softmax 0.01 10000 data_train.csv 1096 5 data_test.csv 275 5
 ```
 
 Program parameters explanation:
@@ -59,7 +59,7 @@ Program parameters explanation:
 
 > Argument 8: Name of the csv file containing the train dataset _Ex:_ __data_train.csv__
 
-> Argument 9: Number of rows in the train dataset (Number of samples) _Ex:_ __1098__
+> Argument 9: Number of rows in the train dataset (Number of samples) _Ex:_ __1096__
 
 > Argument 10: Number of columns in the train dataset (Number of input features + 1 (output variable)). The output variable should always be in the last column _Ex:_ __5__
 
