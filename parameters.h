@@ -10,9 +10,11 @@ typedef struct {
     int momentum;
     int output_layer_size;
     int output_activation_function;
-    int sample_size;
+    double** data_train;
+    double** data_test;
     int feature_size;
-    double** data;
+    int train_sample_size;
+    int test_sample_size;
 } parameters;
 
 // Global variable weight matrix
