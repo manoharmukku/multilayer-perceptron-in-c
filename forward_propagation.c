@@ -36,7 +36,7 @@ void sigmoid(int n, double* input, double* output) {
         output[i+1] = 1.0 / (1.0 + exp(-input[i])); // Sigmoid function
 }
 
-void tanh(int n, double* input, double* output) {
+void tan_h(int n, double* input, double* output) {
     output[0] = 1; // Bias term
 
     int i;
@@ -64,7 +64,7 @@ void softmax(int n, double* input, double* output) {
         output[i+1] = exp(input[i]) / sum; // Softmax function
 }
 
-void forward_propagation(parameters* param, int training_example, int n_layers, int** layer_sizes, double** layer_inputs, double** layer_outputs, double*** weight) {
+void forward_propagation(parameters* param, int training_example, int n_layers, int* layer_sizes, double** layer_inputs, double** layer_outputs, double*** weight) {
     // Fill the input layer's input and output (both are equal) from data matrix with the given training example
     int i;
     layer_outputs[0][0] = 1; // Bias term of input layer
@@ -88,7 +88,7 @@ void forward_propagation(parameters* param, int training_example, int n_layers, 
                 sigmoid(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
                 break;
             case 3: // tanh
-                tanh(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
+                tan_h(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
                 break;
             case 4: // relu
                 relu(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
@@ -115,7 +115,7 @@ void forward_propagation(parameters* param, int training_example, int n_layers, 
             sigmoid(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
             break;
         case 3: // tanh
-            tanh(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
+            tan_h(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
             break;
         case 4: // relu
             relu(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);

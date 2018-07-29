@@ -5,14 +5,7 @@ Desc: MLP Classifier
 GitHub: https://github.com/manoharmukku/multilayer-perceptron-in-c
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <time.h>
-#include "parameters.h"
-#include "forward_propagation.h"
-#include "back_propagation.h"
+#include "mlp_trainer.h"
 
 void initialize_weights(int n_layers, int* layer_sizes, double*** weight) {
     srand(time(0));
@@ -38,7 +31,7 @@ void mlp_trainer(parameters* param) {
     int n_layers = param->n_hidden + 2;
 
     // Save the sizes of layers in an array
-    int** layer_sizes = (int*)calloc(n_layers, sizeof(int));
+    int* layer_sizes = (int*)calloc(n_layers, sizeof(int));
 
     layer_sizes[0] = param->feature_size - 1;
     layer_sizes[n_layers-1] = param->output_layer_size;

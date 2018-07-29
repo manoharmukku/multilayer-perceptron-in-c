@@ -5,8 +5,7 @@ Desc: Multilayer Perceptron implementation in C
 GitHub: https://github.com/manoharmukku/multilayer-perceptron-in-c
 */
 
-#include "mlp_trainer.h"
-#include "parameters.h"
+#include "main.h"
 
 int main(int argc, char** argv) {
     /*
@@ -26,8 +25,8 @@ int main(int argc, char** argv) {
 
     // Sanity check of command line arguments
     if (argc <= 1) {
-        printf("Usage: ./a.out 'No. of hidden layers' 'Size of each hidden layer separated by comma' 'Hidden activations separated by comma'\n
-            'Alpha' 'Max iterations' 'Momentum' 'Size of output layer' 'Output activation' 'Filename' 'Rows' 'Cols'\n");
+        printf("Usage: ./a.out \'No. of hidden layers\' \'Size of each hidden layer separated by comma\' \'Hidden activations separated by comma\'\n \
+            \'Alpha\' \'Max iterations\' \'Momentum\' \'Size of output layer\' \'Output activation\' \'Filename\' \'Rows\' \'Cols\'\n");
         exit(0);
     }
 
@@ -56,29 +55,27 @@ int main(int argc, char** argv) {
     }
 
     // Hidden activation functions - Activation functions for each hidden layer
-    param->hidden_activation_functions = (int*)malloc(n_hidden * sizeof(int));
-    for (i = 0, tok = strtok(argv[3], ","); tok = strtok(NULL, ",") && i < n_hidden; i++) {
-        switch (tok) {
-            case "identity":
-                param->hidden_activation_functions[i] = 1;
-                break;
-            case "sigmoid":
-                param->hidden_activation_functions[i] = 2;
-                break;
-            case "tanh":
-                param->hidden_activation_functions[i] = 3;
-                break;
-            case "relu":
-                param->hidden_activation_functions[i] = 4;
-                break;
-            case "softmax":
-                param->hidden_activation_functions[i] = 5;
-                break;
-            default:
-                printf("Error: Invalid value for hidden activation function\n");
-                printf("Input either identity or sigmoid or tanh or relu or softmax for hidden activation function\n");
-                exit(0);
-                break;
+    param->hidden_activation_functions = (int*)malloc(param->n_hidden * sizeof(int));
+    for (i = 0, tok = strtok(argv[3], ","); tok = strtok(NULL, ",") && i < param->n_hidden; i++) {
+        if (strcmp(tok, "identity") == 0) {
+            param->hidden_activation_functions[i] = 1;
+        }
+        else if (strcmp(tok, "sigmoid") == 0) {
+            param->hidden_activation_functions[i] = 2;
+        }
+        else if (strcmp(tok, "tanh") == 0) {
+            param->hidden_activation_functions[i] = 3;
+        }
+        else if (strcmp(tok, "relu") == 0) {
+            param->hidden_activation_functions[i] = 4;
+        }
+        else if (strcmp(tok, "softmax") == 0) {
+            param->hidden_activation_functions[i] = 5;
+        }
+        else {
+            printf("Error: Invalid value for hidden activation function\n");
+            printf("Input either identity or sigmoid or tanh or relu or softmax for hidden activation function\n");
+            exit(0);
         }
     }
 
@@ -103,27 +100,25 @@ int main(int argc, char** argv) {
     }
 
     // Output activation function
-    switch (argv[8]) {
-        case "identity":
-            param->output_activation_function = 1;
-            break;
-        case "sigmoid":
-            param->output_activation_function = 2;
-            break;
-        case "tanh":
-            param->output_activation_function = 3;
-            break;
-        case "relu":
-            param->output_activation_function = 4;
-            break;
-        case "softmax":
-            param->output_activation_function = 5;
-            break;
-        default:
-            printf("Error: Invalid value for output activation function\n");
-            printf("Input either identity or sigmoid or tanh or relu or softmax for output activation function\n");
-            exit(0);
-            break;
+    if (strcmp(argv[8], "identity") == 0) {
+        param->output_activation_function = 1;
+    }
+    else if (strcmp(argv[8], "sigmoid") == 0) {
+        param->output_activation_function = 2;
+    }
+    else if (strcmp(argv[8], "tanh") == 0) {
+        param->output_activation_function = 3;
+    }
+    else if (strcmp(argv[8], "relu") == 0) {
+        param->output_activation_function = 4;
+    }
+    else if (strcmp(argv[8], "softmax") == 0) {
+        param->output_activation_function = 5;
+    }
+    else {
+        printf("Error: Invalid value for output activation function\n");
+        printf("Input either identity or sigmoid or tanh or relu or softmax for output activation function\n");
+        exit(0);
     }
 
     // Get the parameters of the dataset
