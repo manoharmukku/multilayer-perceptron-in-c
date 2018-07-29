@@ -49,7 +49,7 @@ Program parameters explanation:
 
 > Argument 3: Activation function of each hidden layer from left to right separated by comma (no spaces in-between) _Ex:_ __sigmoid,relu,tanh__
 
-> Argument 4: Number of units in output layer _Ex:_ __3__
+> Argument 4: Number of units in output layer (Specify 1 for binary classification and k for k-class multi-class classification) _Ex:_ __1__
 
 > Argument 5: Output activation function _Ex:_ __softmax__
 
@@ -59,9 +59,26 @@ Program parameters explanation:
 
 > Argument 8: Name of the csv file containing the train dataset _Ex:_ __data_train.csv__
 
-> Argument 9: Number of rows in the train dataset (Number of samples) _Ex:_ __1000__
+> Argument 9: Number of rows in the train dataset (Number of samples) _Ex:_ __1098__
 
-> Argument 10: Number of columns in the train dataset (Number of input features + 1 (output variable)). The output variable should always be in the last column _Ex:_ __11__
+> Argument 10: Number of columns in the train dataset (Number of input features + 1 (output variable)). The output variable should always be in the last column _Ex:_ __5__
+
+> Argument 11: Name of the csv file containing the test dataset _Ex:_ __data_test.csv__
+
+> Argument 12: Number of rows in the test dataset (Number of samples) _Ex:_ __275__
+
+> Argument 13: Number of columns in the test dataset (Number of input features + 1 (output variable)). The output variable should always be in the last column _Ex:_ __5__
+
+## Dataset format:
+
+1. The dataset should be in .csv format
+1. All the feature values should be real (numerical)
+1. There should _not_ be any header row
+1. There should _not_ be any index column specifying the row number
+1. The output variable should always be in the last column
+1. If binary classification, the output variable can take values from 0 or 1 only
+1. If multi-class classification with k-classes, the output variable can take values from 1, 2, 3,..., k only
+1. Make sure to specify the correct paths of the data files in the arguments
 
 #### References:
 
