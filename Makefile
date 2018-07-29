@@ -2,7 +2,7 @@
 CC        = gcc
 OBJ       = read_csv.o forward_propagation.o back_propagation.o mlp_trainer.o main.o
 FLAGS     = -g -Wall
-EXE       = mlp
+EXE       = MLP
 
 # Compile and Assemble C source files into object files
 %.o: %.c
@@ -15,4 +15,4 @@ $(EXE): $(OBJ)
 
 # Clean the generated executable file
 clean:
-	rm -f mlp
+	rm -f $(EXE)
