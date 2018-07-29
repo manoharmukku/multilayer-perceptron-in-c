@@ -1,7 +1,9 @@
 # Implementation of Multi Layer Perceptron in C
 
-Multi Layer perceptron (MLP) is an artificial neural network with one or more hidden layers between input and output layer. Refer the following figure:
+Multi Layer perceptron (MLP) is an artificial neural network with one or more hidden layers between input and output layer. Refer to the following figure:
+
 ![MLP Network with one input layer, two hidden layers and an output layer](/figures/mlp-network.png)
+
 MLP's are fully connected (each hidden node is connected to each input node etc.). They use backpropagation as part of their learning phase. MLPs are widely used for pattern classification, recognition, prediction and approximation. Multi Layer Perceptron can solve problems which are not linearly separable.
 
 #### References:
