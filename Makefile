@@ -15,3 +15,5 @@ $(EXE): $(OBJ)
 # Clean the generated object files
 clean:
 	rm -f $(OBJ)
+clean_exe:
+	rm -f mlp
