@@ -15,7 +15,6 @@ int main(int argc, char** argv) {
     argv[3]: Hidden activation functions (identity - 1, sigmoid - 2, tanh - 3, relu - 4, softmax - 5)
     argv[4]: Alpha (L2 Regularization parameter value)
     argv[5]: Maximum number of iterations
-    argv[6]: Momentum for gradient descent update
     argv[7]: Number of units in output layer
     argv[8]: Output activation function (identity - 1, sigmoid - 2, tanh - 3, relu - 4, softmax - 5)
     argv[9]: Name of the csv file containing the dataset
@@ -25,8 +24,9 @@ int main(int argc, char** argv) {
 
     // Sanity check of command line arguments
     if (argc <= 1) {
-        printf("Usage: ./mlp \'No. of hidden layers\' \'Size of each hidden layer separated by comma\' \'Hidden activations separated by comma\'\n \
-            \'Alpha\' \'Max iterations\' \'Momentum\' \'Size of output layer\' \'Output activation\' \'Filename\' \'Rows\' \'Cols\'\n");
+        printf("Usage: ./MLP \'No. of hidden layers\' \'Size of each hidden layer separated by comma (no space in-between)\'\n \
+            \'Hidden activations separated by comma (no space in-between)\' \'Size of output layer\' \'Output activation\' \n \
+            \'Learning rate\' \'Max iterations\' \'Filename\' \'Rows\' \'Cols\'\n");
         exit(0);
     }
 
@@ -79,40 +79,27 @@ int main(int argc, char** argv) {
         }
     }
 
-    // L2 Regularization parameter
-    param->learning_rate = atoi(argv[4]);
-
-    // Max. number of iterations
-    param->n_iterations_max = atoi(argv[5]);
-    if (param->n_iterations_max <= 0) {
-        printf("Max. number of iterations value should be positive\n");
-        exit(0);
-    }
-
-    // Momentum
-    param->momentum = atoi(argv[6]);
-
     // Output layer size
-    param->output_layer_size = atoi(argv[7]);
+    param->output_layer_size = atoi(argv[4]);
     if (param->output_layer_size <= 0) {
         printf("Output layer size should be positive\n");
         exit(0);
     }
 
     // Output activation function
-    if (strcmp(argv[8], "identity") == 0) {
+    if (strcmp(argv[5], "identity") == 0) {
         param->output_activation_function = 1;
     }
-    else if (strcmp(argv[8], "sigmoid") == 0) {
+    else if (strcmp(argv[5], "sigmoid") == 0) {
         param->output_activation_function = 2;
     }
-    else if (strcmp(argv[8], "tanh") == 0) {
+    else if (strcmp(argv[5], "tanh") == 0) {
         param->output_activation_function = 3;
     }
-    else if (strcmp(argv[8], "relu") == 0) {
+    else if (strcmp(argv[5], "relu") == 0) {
         param->output_activation_function = 4;
     }
-    else if (strcmp(argv[8], "softmax") == 0) {
+    else if (strcmp(argv[5], "softmax") == 0) {
         param->output_activation_function = 5;
     }
     else {
@@ -121,11 +108,24 @@ int main(int argc, char** argv) {
         exit(0);
     }
 
+    // L2 Regularization parameter
+    param->learning_rate = atoi(argv[6]);
+
+    // Max. number of iterations
+    param->n_iterations_max = atoi(argv[7]);
+    if (param->n_iterations_max <= 0) {
+        printf("Max. number of iterations value should be positive\n");
+        exit(0);
+    }
+
+    // Momentum
+    //param->momentum = atoi(argv[6]);
+
     // Get the parameters of the dataset
-    char* filename = argv[9];
-    param->sample_size = atoi(argv[10]);
+    char* filename = argv[8];
+    param->sample_size = atoi(argv[9]);
     // Feature size = Number of input features + 1 output feature
-    param->feature_size = atoi(argv[11]);
+    param->feature_size = atoi(argv[10]);
 
     // Create 2D array memory for the dataset
     param->data = (double**)malloc(param->sample_size * sizeof(double*));
@@ -157,7 +157,7 @@ int main(int argc, char** argv) {
 
     for (i = 0; i < param->sample_size; i++)
         free(param->data[i]);
-    
+
     free(param->data);
     free(param->hidden_activation_functions);
     free(param->hidden_layers_size);
