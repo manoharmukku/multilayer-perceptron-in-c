@@ -61,7 +61,7 @@ Program parameters explanation:
 
 > Argument 9: Number of rows in the train dataset (Number of samples) _Ex:_ __1000__
 
-> Argument 10: Number of columns in the train dataset (Number of input features + 1 (output variable)) _Ex:_ __11__
+> Argument 10: Number of columns in the train dataset (Number of input features + 1 (output variable)). The output variable should always be in the last column _Ex:_ __11__
 
 #### References:
 
