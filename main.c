@@ -18,8 +18,8 @@ int main(int argc, char** argv) {
     argv[7]: Number of units in output layer
     argv[8]: Output activation function (identity - 1, sigmoid - 2, tanh - 3, relu - 4, softmax - 5)
     argv[9]: Name of the csv file containing the dataset
-    argv[10]: Number of rows or samples in the dataset
-    argv[11]: Number of features including the output variable in the dataset
+    argv[10]: Number of rows or samples in the train dataset
+    argv[11]: Number of features including the output variable in the train dataset
     */
 
     // Sanity check of command line arguments
