@@ -8,15 +8,43 @@ Image from [Karim, 2016](https://dzone.com/articles/deep-learning-via-multilayer
 
 MLP's are fully connected (each hidden node is connected to each input node etc.). They use backpropagation as part of their learning phase. MLPs are widely used for pattern classification, recognition, prediction and approximation. Multi Layer Perceptron can solve problems which are not linearly separable ([Neuroph](http://neuroph.sourceforge.net/tutorials/MultiLayerPerceptron.html)).
 
-#### About this implementation
+## About this implementation:
 
-This implementation of MLP was written using C and can perform multi-class classification. Each of the hidden layers and the output layer can run their own activation functions. Supported activation functions are:
+This implementation of MLP was written using C and can perform multi-class classification. Each of the hidden layers and the output layer can run their own activation functions which can be specified during runtime. Supported activation functions are:
 
 - Identity
 - Sigmoid
 - Tanh
 - Relu
 - Softmax
+
+## How to run:
+
+First, clone the project:
+
+>~$ git clone https://github.com/manoharmukku/multilayer-perceptron-in-c
+
+Compile the project:
+
+> make
+
+Then, go to the cloned directory, and run the program with your desired parameters:
+
+> ./MLP 3 4,5,5 sigmoid,relu,tanh 3 softmax 0.01 10000 data_train.csv 1000 11
+
+Program parameters:
+
+> Argument 0: Executable file name _Ex:_ __./MLP__
+> Argument 1: Number of hidden layers _Ex:_ 3
+> Argument 2: Size of each hidden layer separated by comma (no spaces in-between) _Ex:_ __4,5,5__
+> Argument 3: Hidden activation functions separated by comma (no spaces in-between) _Ex:_ __sigmoid,relu,tanh__
+> Argument 4: Number of units in output layer (Number of classes) _Ex:_ __3__
+> Argument 5: Output activation function _Ex:_ __softmax__
+> Argument 6: Learning rate parameter _Ex:_ __0.01__
+> Argument 7: Maximum number of iterations _Ex:_ __10000__
+> Argument 8: Name of the csv file containing the train dataset _Ex:_ __data_train.csv__
+> Argument 9: Number of rows in the train dataset (Number of samples) _Ex:_ __1000__
+> Argument 10: Number of columns in the train dataset (Number of features + 1(output variable)) _Ex:_ __11__
 
 #### References:
 
