@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
     param->hidden_layers_size = (int*)malloc(param->n_hidden * sizeof(int));
     int i;
     char* tok;
-    for (i = 0, tok = strtok(argv[2], ","); tok = strtok(NULL, ",") && i < param->n_hidden; i++) {
+    for (i = 0, tok = strtok(argv[2], ","); (tok = strtok(NULL, ",")) && (i < param->n_hidden); i++) {
         param->hidden_layers_size[i] = atoi(tok);
         // Sanity check of size of hidden layer
         if (param->hidden_layers_size[i] <= 0) {
@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
 
     // Hidden activation functions - Activation functions for each hidden layer
     param->hidden_activation_functions = (int*)malloc(param->n_hidden * sizeof(int));
-    for (i = 0, tok = strtok(argv[3], ","); tok = strtok(NULL, ",") && i < param->n_hidden; i++) {
+    for (i = 0, tok = strtok(argv[3], ","); (tok = strtok(NULL, ",")) && (i < param->n_hidden); i++) {
         if (strcmp(tok, "identity") == 0) {
             param->hidden_activation_functions[i] = 1;
         }
@@ -129,13 +129,12 @@ int main(int argc, char** argv) {
 
     // Create 2D array memory for the dataset
     param->data = (double**)malloc(param->sample_size * sizeof(double*));
-    int i;
     for (i = 0; i < param->sample_size; i++)
         param->data[i] = (double*)malloc(param->feature_size * sizeof(double));
 
     // Read the dataset from the csv into the 2D array
     read_csv(filename, param->sample_size, param->feature_size, param->data);
-
+    
     
 
     // Free the memory allocated in Heap
