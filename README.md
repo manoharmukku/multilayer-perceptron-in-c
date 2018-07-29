@@ -13,10 +13,10 @@ MLP's are fully connected (each hidden node is connected to each input node etc.
 This implementation of MLP was written using C and can perform multi-class classification. Each of the hidden layers and the output layer can run their own activation functions which can be specified during runtime. Supported activation functions are:
 
 - identity ```f(x) = x```
-- sigmoid ```f(x) = 1/(1 + e<sup>-x</sup>)```
+- sigmoid ```f(x) = 1/(1 + e^-x)```
 - tanh ```f(x) = tanh(x)```
 - relu ```f(x) = max(0, x)```
-- softmax ```f(x) = e<sup>x</sup> / sum(e<sup>x</sup>)```
+- softmax ```f(x) = e^x / sum(e^x)```
 
 ## How to run:
 
