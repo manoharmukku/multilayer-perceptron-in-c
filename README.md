@@ -12,11 +12,11 @@ MLP's are fully connected (each hidden node is connected to each input node etc.
 
 This implementation of MLP was written using C and can perform multi-class classification. Each of the hidden layers and the output layer can run their own activation functions which can be specified during runtime. Supported activation functions are:
 
-- Identity
-- Sigmoid
-- Tanh
-- Relu
-- Softmax
+- identity
+- sigmoid
+- tanh
+- relu
+- softmax
 
 ## How to run:
 
@@ -43,7 +43,7 @@ Program parameters explanation:
 
 > Argument 0: Executable file name _Ex:_ __./MLP__
 
-> Argument 1: Number of hidden layers _Ex:_ 3
+> Argument 1: Number of hidden layers _Ex:_ __3__
 
 > Argument 2: Size of each hidden layer separated by comma (no spaces in-between) _Ex:_ __4,5,5__
 
