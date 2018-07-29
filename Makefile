@@ -1,6 +1,6 @@
 # Defines
 CC        = gcc
-OBJ       = read_csv.o forward_propagation.o back_propagation.o mlp_trainer.o main.o
+OBJ       = read_csv.o forward_propagation.o back_propagation.o mlp_trainer.o mlp_classifier.o main.o
 FLAGS     = -g -Wall
 EXE       = MLP
 
