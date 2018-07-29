@@ -7,7 +7,9 @@ GitHub: https://github.com/manoharmukku/multilayer-perceptron-in-c
 
 #include "mlp_classifier.h"
 
-void mat_mul(double* a, double** b, double* result, int n, int p) {
+#define max(x, y) (x > y ? x : y)
+
+void mat_mul_classify(double* a, double** b, double* result, int n, int p) {
     // matrix a of size 1 x n (array)
     // matrix b of size n x p
     // matrix result of size 1 x p (array)
@@ -20,7 +22,7 @@ void mat_mul(double* a, double** b, double* result, int n, int p) {
     }
 }
 
-void identity(int n, double* input, double* output) {
+void identity_classify(int n, double* input, double* output) {
     output[0] = 1; // Bias term
 
     int i;
@@ -28,7 +30,7 @@ void identity(int n, double* input, double* output) {
         output[i+1] = input[i]; // Identity function
 }
 
-void sigmoid(int n, double* input, double* output) {
+void sigmoid_classify(int n, double* input, double* output) {
     output[0] = 1; // Bias term
 
     int i;
@@ -36,7 +38,7 @@ void sigmoid(int n, double* input, double* output) {
         output[i+1] = 1.0 / (1.0 + exp(-input[i])); // Sigmoid function
 }
 
-void tan_h(int n, double* input, double* output) {
+void tan_h_classify(int n, double* input, double* output) {
     output[0] = 1; // Bias term
 
     int i;
@@ -44,7 +46,7 @@ void tan_h(int n, double* input, double* output) {
         output[i+1] = tanh(input[i]); // tanh function
 }
 
-void relu(int n, double* input, double* output) {
+void relu_classify(int n, double* input, double* output) {
     output[0] = 1; // Bias term
 
     int i;
@@ -52,7 +54,7 @@ void relu(int n, double* input, double* output) {
         output[i+1] = max(0.0, input[i]); // ReLU function
 }
 
-void softmax(int n, double* input, double* output) {
+void softmax_classify(int n, double* input, double* output) {
     output[0] = 1; // Bias term
 
     int i;
@@ -103,25 +105,25 @@ void mlp_classifier(parameters* param) {
         int j;
         for (i = 1; i < n_layers-1; i++) {
             // Compute layer_inputs[i]
-            mat_mul(layer_outputs[i-1], weight[i-1], layer_inputs[i], layer_sizes[i-1]+1, layer_sizes[i]);
+            mat_mul_classify(layer_outputs[i-1], weight[i-1], layer_inputs[i], layer_sizes[i-1]+1, layer_sizes[i]);
 
             // Compute layer_outputs[i]
             // Activation functions (identity - 1, sigmoid - 2, tanh - 3, relu - 4, softmax - 5)
             switch (param->hidden_activation_functions[i-1]) {
                 case 1: // identity
-                    identity(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
+                    identity_classify(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
                     break;
                 case 2: // sigmoid
-                    sigmoid(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
+                    sigmoid_classify(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
                     break;
                 case 3: // tanh
-                    tan_h(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
+                    tan_h_classify(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
                     break;
                 case 4: // relu
-                    relu(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
+                    relu_classify(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
                     break;
                 case 5: // softmax
-                    softmax(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
+                    softmax_classify(layer_sizes[i], layer_inputs[i], layer_outputs[i]);
                     break;
                 default:
                     printf("Forward propagation: Invalid hidden activation function\n");
@@ -131,24 +133,24 @@ void mlp_classifier(parameters* param) {
         }
 
         // Fill the output layers's input and output
-        mat_mul(layer_outputs[n_layers-2], weight[n_layers-2], layer_inputs[n_layers-1], layer_sizes[n_layers-2]+1, layer_sizes[n_layers-1]);
+        mat_mul_classify(layer_outputs[n_layers-2], weight[n_layers-2], layer_inputs[n_layers-1], layer_sizes[n_layers-2]+1, layer_sizes[n_layers-1]);
 
         // Activation functions (identity - 1, sigmoid - 2, tanh - 3, relu - 4, softmax - 5)
         switch (param->output_activation_function) {
             case 1: // identity
-                identity(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
+                identity_classify(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
                 break;
             case 2: // sigmoid
-                sigmoid(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
+                sigmoid_classify(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
                 break;
             case 3: // tanh
-                tan_h(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
+                tan_h_classify(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
                 break;
             case 4: // relu
-                relu(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
+                relu_classify(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
                 break;
             case 5: // softmax
-                softmax(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
+                softmax_classify(layer_sizes[n_layers-1], layer_inputs[n_layers-1], layer_outputs[n_layers-1]);
                 break;
             default:
                 printf("Forward propagation: Invalid hidden activation function\n");

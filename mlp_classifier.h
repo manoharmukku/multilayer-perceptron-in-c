@@ -7,8 +7,6 @@
 #include "read_csv.h"
 #include "parameters.h"
 
-#define max(x, y) (x > y ? x : y)
-
 void mlp_classifier(parameters*);
 
 #endif

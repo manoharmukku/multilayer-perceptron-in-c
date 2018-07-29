@@ -7,6 +7,8 @@ GitHub: https://github.com/manoharmukku/multilayer-perceptron-in-c
 
 #include "forward_propagation.h"
 
+#define max(x, y) (x > y ? x : y)
+
 void mat_mul(double* a, double** b, double* result, int n, int p) {
     // matrix a of size 1 x n (array)
     // matrix b of size n x p
