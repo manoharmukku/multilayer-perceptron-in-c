@@ -8,12 +8,11 @@ EXE       = mlp
 %.o: %.c
 	$(CC) -c *.c
 
-# Generate the executable file
+# Generate the executable file and remove the used object files
 $(EXE): $(OBJ)
 	$(CC) $(FLAGS) $(OBJ) -o $(EXE)
-
-# Clean the generated object files
-clean:
 	rm -f $(OBJ)
-clean_exe:
+
+# Clean the generated executable file
+clean:
 	rm -f mlp
