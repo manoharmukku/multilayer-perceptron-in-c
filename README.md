@@ -8,7 +8,15 @@ Image from [Karim, 2016](https://dzone.com/articles/deep-learning-via-multilayer
 
 MLP's are fully connected (each hidden node is connected to each input node etc.). They use backpropagation as part of their learning phase. MLPs are widely used for pattern classification, recognition, prediction and approximation. Multi Layer Perceptron can solve problems which are not linearly separable ([Neuroph](http://neuroph.sourceforge.net/tutorials/MultiLayerPerceptron.html)).
 
-This implementation of MLP was written using C and can perform multi-class classification. 
+#### About this implementation
+
+This implementation of MLP was written using C and can perform multi-class classification. Each of the hidden layers and the output layer can run their own activation functions. Supported activation functions are:
+
+- Identity
+- Sigmoid
+- Tanh
+- Relu
+- Softmax
 
 #### References:
 
