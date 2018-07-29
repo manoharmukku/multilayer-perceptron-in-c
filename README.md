@@ -71,7 +71,7 @@ Program parameters explanation:
 
 ## Dataset format:
 
-1. The dataset should be in .csv format
+1. The datasets should be in .csv format
 1. All the feature values should be real (numerical)
 1. There should _not_ be any header row
 1. There should _not_ be any index column specifying the row number
@@ -79,6 +79,8 @@ Program parameters explanation:
 1. If binary classification, the output variable can take values from 0 or 1 only
 1. If multi-class classification with k-classes, the output variable can take values from 1, 2, 3,..., k only
 1. Make sure to specify the correct paths of the data files in the arguments
+
+Example dataset used for training and testing: [Banknote authentication dataset from ULI ML Repository](https://archive.ics.uci.edu/ml/datasets/banknote+authentication)
 
 #### References:
 
