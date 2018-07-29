@@ -139,20 +139,29 @@ int main(int argc, char** argv) {
     mlp_trainer(param);
 
     // Free the memory allocated in Heap
+    for (i = 0; i < param->feature_size; i++)
+        free(weight[0][i]);
+
+    int j;
+    for (i = 1; i < param->n_hidden; i++)
+        for (j = 0; j < param->hidden_layers_size[i-1]+1; j++)
+            free(weight[i][j]);
+
+    for (i = 0; i < param->output_layer_size+1; i++)
+        free(weight[param->n_hidden][i]);
+
+    for (i = 0; i < param->n_hidden+1; i++)
+        free(weight[i]);
+
+    free(weight);
+
     for (i = 0; i < param->sample_size; i++)
         free(param->data[i]);
+    
     free(param->data);
     free(param->hidden_activation_functions);
     free(param->hidden_layers_size);
     free(param);
-
-    int j;
-    for (i = 0; i < n_layers - 1; i++)
-        for (j = 0; j < layer_sizes[i]+1; j++)
-            free(weight[i][j]);
-    for (i = 0; i < n_layers - 1; i++)
-        free(weight[i]);
-    free(weight);
 
     return 0;
 }
