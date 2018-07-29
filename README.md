@@ -6,7 +6,9 @@ Multi Layer perceptron (MLP) is an artificial neural network with one or more hi
 
 Image from [Karim, 2016](https://dzone.com/articles/deep-learning-via-multilayer-perceptron-classifier). A multilayer perceptron with six input neurons, two hidden layers, and one output layer.
 
-MLP's are fully connected (each hidden node is connected to each input node etc.). They use backpropagation as part of their learning phase. MLPs are widely used for pattern classification, recognition, prediction and approximation. Multi Layer Perceptron can solve problems which are not linearly separable.
+MLP's are fully connected (each hidden node is connected to each input node etc.). They use backpropagation as part of their learning phase. MLPs are widely used for pattern classification, recognition, prediction and approximation. Multi Layer Perceptron can solve problems which are not linearly separable ([Neuroph](http://neuroph.sourceforge.net/tutorials/MultiLayerPerceptron.html)).
+
+This implementation of MLP was written using C and can perform multi-class classification. 
 
 #### References:
 
