@@ -43,8 +43,8 @@ void d_softmax(int layer_size, double* layer_input, double* layer_output, double
         layer_derivative[i] = layer_output[i+1] * (1.0 - layer_output[i+1]);
 }
 
-void calculate_local_gradient(parameters* param, int layer_no, int n_layers, int* layer_sizes, double** layer_inputs, double** layer_outputs, 
-    double*** weight, double* expected_output, double** local_gradient) {
+void calculate_local_gradient(parameters* param, int layer_no, int n_layers, int* layer_sizes, double** layer_inputs, double** layer_outputs,
+    double* expected_output, double** local_gradient) {
     // Create memory for derivatives
     double** layer_derivatives = (double**)calloc(n_layers, sizeof(double*));
 
@@ -187,7 +187,7 @@ void calculate_local_gradient(parameters* param, int layer_no, int n_layers, int
 
 }
 
-void back_propagation(parameters* param, int training_example, int n_layers, int* layer_sizes, double** layer_inputs, double** layer_outputs, double*** weight) {
+void back_propagation(parameters* param, int training_example, int n_layers, int* layer_sizes, double** layer_inputs, double** layer_outputs) {
     /* ------------------ Expected output ----------------------------------------*/
     // Get the expected output from the data matrix
     // Create memory for the expected output array
@@ -197,9 +197,9 @@ void back_propagation(parameters* param, int training_example, int n_layers, int
     // Make the respective element in expected_output to 1 and rest all 0
     // Ex: If y = 3 and output_layer_size = 4 then expected_output = [0, 0, 1, 0]
     if (param->output_layer_size == 1)
-        expected_output[0] = param->data[training_example][param->feature_size-1];
+        expected_output[0] = param->data_train[training_example][param->feature_size-1];
     else 
-        expected_output[(int)(param->data[training_example][param->feature_size-1] - 1)] = 1;
+        expected_output[(int)(param->data_train[training_example][param->feature_size-1] - 1)] = 1;
 
     /* ---------------------- Weight correction Memory allocation ----------------------------------- */
     // Create memory for the weight_correction matrices between layers
@@ -226,7 +226,7 @@ void back_propagation(parameters* param, int training_example, int n_layers, int
 
     /*----------- Calculate weight corrections for all layers' weights -------------------*/
     // Weight correction for the output layer
-    calculate_local_gradient(param, n_layers-1, n_layers, layer_sizes, layer_inputs, layer_outputs, weight, expected_output, local_gradient);
+    calculate_local_gradient(param, n_layers-1, n_layers, layer_sizes, layer_inputs, layer_outputs, expected_output, local_gradient);
     for (i = 0; i < param->output_layer_size; i++)
         for (j = 0; j < layer_sizes[n_layers-2]+1; j++)
             weight_correction[n_layers-2][j][i] = (param->learning_rate) * local_gradient[n_layers-1][i] * layer_outputs[n_layers-2][j];
@@ -234,7 +234,7 @@ void back_propagation(parameters* param, int training_example, int n_layers, int
     // Weight correction for the hidden layers
     int k;
     for (i = n_layers-2; i >= 1; i--) {
-        calculate_local_gradient(param, i, n_layers, layer_sizes, layer_inputs, layer_outputs, weight, expected_output, local_gradient);
+        calculate_local_gradient(param, i, n_layers, layer_sizes, layer_inputs, layer_outputs, expected_output, local_gradient);
 
         for (j = 0; j < layer_sizes[i]; j++) 
             for (k = 0; k < layer_sizes[i-1]+1; k++)

@@ -5,6 +5,6 @@
 #include <stdlib.h>
 #include "parameters.h"
 
-void back_propagation(parameters*, int, int, int*, double**, double**, double***);
+void back_propagation(parameters*, int, int, int*, double**, double**);
 
 #endif

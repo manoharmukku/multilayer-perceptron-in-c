@@ -1,13 +1,13 @@
 /*
 Author: Manohar Mukku
 Date: 20.07.2018
-Desc: MLP Classifier
+Desc: Train the parameter weights on the train data set
 GitHub: https://github.com/manoharmukku/multilayer-perceptron-in-c
 */
 
 #include "mlp_trainer.h"
 
-void initialize_weights(int n_layers, int* layer_sizes, double*** weight) {
+void initialize_weights(int n_layers, int* layer_sizes) {
     srand(time(0));
 
     // epsilon = sqrt(6/(layer_size[i] + layer_size[i+1])) used for random initialization
@@ -68,19 +68,19 @@ void mlp_trainer(parameters* param) {
         layer_outputs[i] = (double*)calloc(layer_sizes[i]+1, sizeof(double));
 
     // Initialize the weights
-    initialize_weights(n_layers, layer_sizes, weight);
+    initialize_weights(n_layers, layer_sizes);
 
     // Train the MLP
     int training_example;
     for (i = 0; i < param->n_iterations_max; i++) {
         for (training_example = 0; training_example < param->sample_size; training_example++) {
             // Perform forward propagation on the jth training example
-            forward_propagation(param, training_example, n_layers, layer_sizes, layer_inputs, layer_outputs, weight);
+            forward_propagation(param, training_example, n_layers, layer_sizes, layer_inputs, layer_outputs);
 
             // Calculate the error
 
             // Perform back propagation and update weights
-            back_propagation(param, training_example, n_layers, layer_sizes, layer_inputs, layer_outputs, weight);
+            back_propagation(param, training_example, n_layers, layer_sizes, layer_inputs, layer_outputs);
         }   
     }
 

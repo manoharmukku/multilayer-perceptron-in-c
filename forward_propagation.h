@@ -8,6 +8,6 @@
 
 #define max(x, y) (x > y ? x : y)
 
-void forward_propagation(parameters*, int, int, int*, double**, double**, double***);
+void forward_propagation(parameters*, int, int, int*, double**, double**);
 
 #endif

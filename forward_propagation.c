@@ -64,12 +64,12 @@ void softmax(int n, double* input, double* output) {
         output[i+1] = exp(input[i]) / sum; // Softmax function
 }
 
-void forward_propagation(parameters* param, int training_example, int n_layers, int* layer_sizes, double** layer_inputs, double** layer_outputs, double*** weight) {
+void forward_propagation(parameters* param, int training_example, int n_layers, int* layer_sizes, double** layer_inputs, double** layer_outputs) {
     // Fill the input layer's input and output (both are equal) from data matrix with the given training example
     int i;
     layer_outputs[0][0] = 1; // Bias term of input layer
     for (i = 0; i < param->feature_size-1; i++)
-        layer_outputs[0][i+1] = layer_inputs[0][i] = param->data[training_example][i];
+        layer_outputs[0][i+1] = layer_inputs[0][i] = param->data_train[training_example][i];
 
     // Perform forward propagation for each hidden layer
     // Calculate input and output of each hidden layer

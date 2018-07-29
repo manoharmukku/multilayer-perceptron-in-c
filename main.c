@@ -15,18 +15,21 @@ int main(int argc, char** argv) {
     argv[3]: Hidden activation functions (identity - 1, sigmoid - 2, tanh - 3, relu - 4, softmax - 5)
     argv[4]: Alpha (L2 Regularization parameter value)
     argv[5]: Maximum number of iterations
-    argv[7]: Number of units in output layer
-    argv[8]: Output activation function (identity - 1, sigmoid - 2, tanh - 3, relu - 4, softmax - 5)
-    argv[9]: Name of the csv file containing the dataset
-    argv[10]: Number of rows or samples in the train dataset
-    argv[11]: Number of features including the output variable in the train dataset
+    argv[6]: Number of units in output layer
+    argv[7]: Output activation function (identity - 1, sigmoid - 2, tanh - 3, relu - 4, softmax - 5)
+    argv[8]: Name of the csv file containing the train dataset
+    argv[9]: Number of rows or samples in the train dataset
+    argv[10]: Number of features including the output variable in the train dataset
+    argv[11]: Name of the csv file containing the test dataset
+    argv[12]: Number of rows or samples in the test dataset
+    argv[13]: Number of features including the output variable in the test dataset
     */
 
     // Sanity check of command line arguments
     if (argc <= 1) {
         printf("Usage: ./MLP \'No. of hidden layers\' \'Size of each hidden layer separated by comma (no space in-between)\'\n \
             \'Hidden activations separated by comma (no space in-between)\' \'Size of output layer\' \'Output activation\' \n \
-            \'Learning rate\' \'Max iterations\' \'Filename\' \'Rows\' \'Cols\'\n");
+            \'Learning rate\' \'Max iterations\' \'Train_filename\' \'Train_rows\' \'Train_cols\' \'Test_filename\' \'Test_rows\' \'Test_cols\'\n");
         exit(0);
     }
 
@@ -121,22 +124,39 @@ int main(int argc, char** argv) {
     // Momentum
     //param->momentum = atoi(argv[6]);
 
-    // Get the parameters of the dataset
-    char* filename = argv[8];
-    param->sample_size = atoi(argv[9]);
+    // Get the parameters of the train dataset
+    char* train_filename = argv[8];
+    param->train_sample_size = atoi(argv[9]);
     // Feature size = Number of input features + 1 output feature
     param->feature_size = atoi(argv[10]);
 
     // Create 2D array memory for the dataset
-    param->data = (double**)malloc(param->sample_size * sizeof(double*));
-    for (i = 0; i < param->sample_size; i++)
-        param->data[i] = (double*)malloc(param->feature_size * sizeof(double));
+    param->data_train = (double**)malloc(param->train_sample_size * sizeof(double*));
+    for (i = 0; i < param->train_sample_size; i++)
+        param->data_train[i] = (double*)malloc(param->feature_size * sizeof(double));
 
-    // Read the dataset from the csv into the 2D array
-    read_csv(filename, param->sample_size, param->feature_size, param->data);
+    // Read the train dataset from the csv into the 2D array
+    read_csv(train_filename, param->train_sample_size, param->feature_size, param->data_train);
 
-    // Train the neural network
+    // Get the parameters of the test dataset
+    char* test_filename = argv[11];
+    param->test_sample_size = atoi(argv[12]);
+    // Feature size = Number of input features + 1 output feature
+    param->feature_size = atoi(argv[13]);
+
+    // Create 2D array memory for the dataset
+    param->data_test = (double**)malloc(param->test_sample_size * sizeof(double*));
+    for (i = 0; i < param->test_sample_size; i++)
+        param->data_test[i] = (double*)malloc(param->feature_size * sizeof(double));
+
+    // Read the test dataset from the csv into the 2D array
+    read_csv(test_filename, param->test_sample_size, param->feature_size, param->data_test);
+
+    // Train the neural network on the train data
     mlp_trainer(param);
+
+    // Classify the test data using the trained parameter weights
+    mlp_classifier(param);
 
     // Free the memory allocated in Heap
     for (i = 0; i < param->feature_size; i++)
@@ -155,10 +175,14 @@ int main(int argc, char** argv) {
 
     free(weight);
 
-    for (i = 0; i < param->sample_size; i++)
-        free(param->data[i]);
+    for (i = 0; i < param->train_sample_size; i++)
+        free(param->data_train[i]);
 
-    free(param->data);
+    for (i = 0; i < param->test_sample_size; i++)
+        free(param->data_test[i]);
+
+    free(param->data_train);
+    free(param->data_test);
     free(param->hidden_activation_functions);
     free(param->hidden_layers_size);
     free(param);
