@@ -95,14 +95,5 @@ void mlp_trainer(parameters* param) {
 
     free(layer_inputs);
 
-    for (i = 0; i < n_layers - 1; i++)
-        for (j = 0; j < layer_sizes[i]+1; j++)
-            free(weight[i][j]);
-
-    for (i = 0; i < n_layers - 1; i++)
-        free(weight[i]);
-
-    free(weight);
-
     free(layer_sizes);
 }

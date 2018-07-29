@@ -135,7 +135,8 @@ int main(int argc, char** argv) {
     // Read the dataset from the csv into the 2D array
     read_csv(filename, param->sample_size, param->feature_size, param->data);
 
-    
+    // Train the neural network
+    mlp_trainer(param);
 
     // Free the memory allocated in Heap
     for (i = 0; i < param->sample_size; i++)
@@ -144,6 +145,14 @@ int main(int argc, char** argv) {
     free(param->hidden_activation_functions);
     free(param->hidden_layers_size);
     free(param);
+
+    int j;
+    for (i = 0; i < n_layers - 1; i++)
+        for (j = 0; j < layer_sizes[i]+1; j++)
+            free(weight[i][j]);
+    for (i = 0; i < n_layers - 1; i++)
+        free(weight[i]);
+    free(weight);
 
     return 0;
 }
