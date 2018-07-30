@@ -59,7 +59,7 @@ int main(int argc, char** argv) {
 
     // Hidden activation functions - Activation functions for each hidden layer
     param->hidden_activation_functions = (int*)malloc(param->n_hidden * sizeof(int));
-    for (i = 0, tok = strtok(argv[3], ","); (tok = strtok(NULL, ",")) && (i < param->n_hidden); i++) {
+    for (i = 0, tok = strtok(argv[3], ","); (i < param->n_hidden); i++) {
         if (strcmp(tok, "identity") == 0) {
             param->hidden_activation_functions[i] = 1;
         }
@@ -80,6 +80,8 @@ int main(int argc, char** argv) {
             printf("Input either identity or sigmoid or tanh or relu or softmax for hidden activation function\n");
             exit(0);
         }
+
+        tok = strtok(NULL, ",");
     }
 
     // Output layer size
