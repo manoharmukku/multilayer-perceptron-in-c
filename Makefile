@@ -10,7 +10,7 @@ EXECUTABLE = MLP
 
 # Generate the executable file
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $(EXECUTABLE) -I $(INCL_DIR)
+	$(CC) $(CFLAGS) $(OBJECTS) -o $(EXECUTABLE) -I $(INCL_DIR) -lm
 
 # Compile and Assemble C source files into object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCLUDES)
