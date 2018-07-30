@@ -75,7 +75,6 @@ void forward_propagation(parameters* param, int training_example, int n_layers, 
 
     // Perform forward propagation for each hidden layer
     // Calculate input and output of each hidden layer
-    int j;
     for (i = 1; i < n_layers-1; i++) {
         // Compute layer_inputs[i]
         mat_mul(layer_outputs[i-1], weight[i-1], layer_inputs[i], layer_sizes[i-1]+1, layer_sizes[i]);

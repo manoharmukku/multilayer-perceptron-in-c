@@ -102,7 +102,6 @@ void mlp_classifier(parameters* param) {
 
         // Perform forward propagation for each hidden layer
         // Calculate input and output of each hidden layer
-        int j;
         for (i = 1; i < n_layers-1; i++) {
             // Compute layer_inputs[i]
             mat_mul_classify(layer_outputs[i-1], weight[i-1], layer_inputs[i], layer_sizes[i-1]+1, layer_sizes[i]);
