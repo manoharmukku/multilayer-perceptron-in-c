@@ -99,7 +99,7 @@ void calculate_local_gradient(parameters* param, int layer_no, int n_layers, int
 
                 break;
             default:
-                printf("Invalid output activation function\n");
+                printf("Calculate local gradient: Invalid output activation function\n");
                 exit(0);
                 break;
         }
@@ -118,7 +118,7 @@ void calculate_local_gradient(parameters* param, int layer_no, int n_layers, int
                 for (i = 0; i < layer_sizes[layer_no]; i++) {
                     double error = 0.0;
                     for (j = 0; j < layer_sizes[layer_no+1]; j++)
-                        error += local_gradient[layer_no+1][j] * weight[layer_no][i][j];
+                        error += local_gradient[layer_no+1][j] * param->weight[layer_no][i][j];
 
                     local_gradient[layer_no][i] = error * layer_derivatives[layer_no][i];
                 }
@@ -130,7 +130,7 @@ void calculate_local_gradient(parameters* param, int layer_no, int n_layers, int
                 for (i = 0; i < layer_sizes[layer_no]; i++) {
                     double error = 0.0;
                     for (j = 0; j < layer_sizes[layer_no+1]; j++)
-                        error += local_gradient[layer_no+1][j] * weight[layer_no][i][j];
+                        error += local_gradient[layer_no+1][j] * param->weight[layer_no][i][j];
 
                     local_gradient[layer_no][i] = error * layer_derivatives[layer_no][i];
                 }
@@ -142,7 +142,7 @@ void calculate_local_gradient(parameters* param, int layer_no, int n_layers, int
                 for (i = 0; i < layer_sizes[layer_no]; i++) {
                     double error = 0.0;
                     for (j = 0; j < layer_sizes[layer_no+1]; j++)
-                        error += local_gradient[layer_no+1][j] * weight[layer_no][i][j];
+                        error += local_gradient[layer_no+1][j] * param->weight[layer_no][i][j];
 
                     local_gradient[layer_no][i] = error * layer_derivatives[layer_no][i];
                 }
@@ -154,7 +154,7 @@ void calculate_local_gradient(parameters* param, int layer_no, int n_layers, int
                 for (i = 0; i < layer_sizes[layer_no]; i++) {
                     double error = 0.0;
                     for (j = 0; j < layer_sizes[layer_no+1]; j++)
-                        error += local_gradient[layer_no+1][j] * weight[layer_no][i][j];
+                        error += local_gradient[layer_no+1][j] * param->weight[layer_no][i][j];
 
                     local_gradient[layer_no][i] = error * layer_derivatives[layer_no][i];
                 }
@@ -166,7 +166,7 @@ void calculate_local_gradient(parameters* param, int layer_no, int n_layers, int
                 for (i = 0; i < layer_sizes[layer_no]; i++) {
                     double error = 0.0;
                     for (j = 0; j < layer_sizes[layer_no+1]; j++)
-                        error += local_gradient[layer_no+1][j] * weight[layer_no][i][j];
+                        error += local_gradient[layer_no+1][j] * param->weight[layer_no][i][j];
 
                     local_gradient[layer_no][i] = error * layer_derivatives[layer_no][i];
                 }
@@ -245,7 +245,7 @@ void back_propagation(parameters* param, int training_example, int n_layers, int
     for (i = 0; i < n_layers-1; i++) {
         for (j = 0; j < layer_sizes[i]+1; j++) {
             for (k = 0; k < layer_sizes[i+1]; k++) {
-                weight[i][j][k] -= weight_correction[i][j][k];
+                param->weight[i][j][k] -= weight_correction[i][j][k];
             }
         }
     }

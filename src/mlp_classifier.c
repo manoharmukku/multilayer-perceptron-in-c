@@ -95,7 +95,7 @@ void mlp_classifier(parameters* param, int* layer_sizes) {
         // Calculate input and output of each hidden layer
         for (i = 1; i < n_layers-1; i++) {
             // Compute layer_inputs[i]
-            mat_mul_classify(layer_outputs[i-1], weight[i-1], layer_inputs[i], layer_sizes[i-1]+1, layer_sizes[i]);
+            mat_mul_classify(layer_outputs[i-1], param->weight[i-1], layer_inputs[i], layer_sizes[i-1]+1, layer_sizes[i]);
 
             // Compute layer_outputs[i]
             // Activation functions (identity - 1, sigmoid - 2, tanh - 3, relu - 4, softmax - 5)
@@ -123,7 +123,7 @@ void mlp_classifier(parameters* param, int* layer_sizes) {
         }
 
         // Fill the output layers's input and output
-        mat_mul_classify(layer_outputs[n_layers-2], weight[n_layers-2], layer_inputs[n_layers-1], layer_sizes[n_layers-2]+1, layer_sizes[n_layers-1]);
+        mat_mul_classify(layer_outputs[n_layers-2], param->weight[n_layers-2], layer_inputs[n_layers-1], layer_sizes[n_layers-2]+1, layer_sizes[n_layers-1]);
 
         // Activation functions (identity - 1, sigmoid - 2, tanh - 3, relu - 4, softmax - 5)
         switch (param->output_activation_function) {

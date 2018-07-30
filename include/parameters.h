@@ -15,9 +15,7 @@ typedef struct {
     int feature_size;
     int train_sample_size;
     int test_sample_size;
+    double*** weight;
 } parameters;
-
-// Global variable weight matrix
-double*** weight;
 
 #endif

@@ -7,7 +7,7 @@ GitHub: https://github.com/manoharmukku/multilayer-perceptron-in-c
 
 #include "mlp_trainer.h"
 
-void initialize_weights(int n_layers, int* layer_sizes) {
+void initialize_weights(parameters* param, int n_layers, int* layer_sizes) {
     srand(time(0));
 
     // epsilon = sqrt(6/(layer_size[i] + layer_size[i+1])) used for random initialization
@@ -21,7 +21,7 @@ void initialize_weights(int n_layers, int* layer_sizes) {
     for (i = 0; i < n_layers-1; i++)
         for (j = 0; j < layer_sizes[i]+1; j++)
             for (k = 0; k < layer_sizes[i+1]; k++)
-                weight[i][j][k] = -epsilon[i] + ((double)rand() / ((double)RAND_MAX / (2.0 * epsilon[i])));
+                param->weight[i][j][k] = -epsilon[i] + ((double)rand() / ((double)RAND_MAX / (2.0 * epsilon[i])));
 
     // Free the memory allocated in Heap for epsilon array
     free(epsilon);
@@ -45,7 +45,7 @@ void mlp_trainer(parameters* param, int* layer_sizes) {
         layer_outputs[i] = (double*)calloc(layer_sizes[i]+1, sizeof(double));
 
     // Initialize the weights
-    initialize_weights(n_layers, layer_sizes);
+    initialize_weights(param, n_layers, layer_sizes);
 
     // Train the MLP
     int training_example;

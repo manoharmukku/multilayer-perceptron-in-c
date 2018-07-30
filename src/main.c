@@ -50,18 +50,19 @@ int main(int argc, char** argv) {
     param->hidden_layers_size = (int*)malloc(param->n_hidden * sizeof(int));
     int i;
     char* tok;
-    for (i = 0, tok = strtok(argv[2], ","); (tok = strtok(NULL, ",")) && (i < param->n_hidden); i++) {
+    for (i = 0, tok = strtok(argv[2], ","); i < param->n_hidden; i++) {
         param->hidden_layers_size[i] = atoi(tok);
         // Sanity check of size of hidden layer
         if (param->hidden_layers_size[i] <= 0) {
             printf("Error: Hidden layer sizes should be positive\n");
             exit(0);
         }
+        tok = strtok(NULL, ",");
     }
 
     // Hidden activation functions - Activation functions for each hidden layer
     param->hidden_activation_functions = (int*)malloc(param->n_hidden * sizeof(int));
-    for (i = 0, tok = strtok(argv[3], ","); (i < param->n_hidden); i++) {
+    for (i = 0, tok = strtok(argv[3], ","); i < param->n_hidden; i++) {
         if (strcmp(tok, "identity") == 0) {
             param->hidden_activation_functions[i] = 1;
         }
@@ -170,18 +171,17 @@ int main(int argc, char** argv) {
 
     // Create memory for the weight matrices between layers
     // weight is a pointer to the array of 2D arrays between the layers
-    // Global variable
-    weight = (double***)calloc(n_layers - 1, sizeof(double**));
+    param->weight = (double***)calloc(n_layers - 1, sizeof(double**));
 
     // Each 2D array between two layers i and i+1 is of size ((layer_size[i]+1) x layer_size[i+1])
     // The weight matrix includes weights for the bias terms too
     for (i = 0; i < n_layers-1; i++)
-        weight[i] = (double**)calloc(layer_sizes[i]+1, sizeof(double*));
+        param->weight[i] = (double**)calloc(layer_sizes[i]+1, sizeof(double*));
 
     int j;
     for (i = 0; i < n_layers-1; i++)
         for (j = 0; j < layer_sizes[i]+1; j++)
-            weight[i][j] = (double*)calloc(layer_sizes[i+1], sizeof(double));
+            param->weight[i][j] = (double*)calloc(layer_sizes[i+1], sizeof(double));
 
     // Train the neural network on the train data
     mlp_trainer(param, layer_sizes);
@@ -192,12 +192,12 @@ int main(int argc, char** argv) {
     // Free the memory allocated in Heap
     for (i = 0; i < n_layers-1; i++)
         for (j = 0; j < layer_sizes[i]+1; j++)
-            free(weight[i][j]);
+            free(param->weight[i][j]);
 
     for (i = 0; i < n_layers-1; i++)
-        free(weight[i]);
+        free(param->weight[i]);
 
-    free(weight);
+    free(param->weight);
 
     free(layer_sizes);
 
