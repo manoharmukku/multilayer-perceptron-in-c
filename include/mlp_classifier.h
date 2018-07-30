@@ -7,6 +7,6 @@
 #include "read_csv.h"
 #include "parameters.h"
 
-void mlp_classifier(parameters*);
+void mlp_classifier(parameters*, int*);
 
 #endif

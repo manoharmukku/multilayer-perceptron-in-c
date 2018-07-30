@@ -10,6 +10,6 @@
 #include "back_propagation.h"
 #include "parameters.h"
 
-void mlp_trainer(parameters* param);
+void mlp_trainer(parameters* param, int*);
 
 #endif

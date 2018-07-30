@@ -66,22 +66,13 @@ void softmax_classify(int n, double* input, double* output) {
         output[i+1] = exp(input[i]) / sum; // Softmax function
 }
 
-void mlp_classifier(parameters* param) {
+void mlp_classifier(parameters* param, int* layer_sizes) {
     int n_layers = param->n_hidden + 2;
-
-    // Save the sizes of layers in an array
-    int* layer_sizes = (int*)calloc(n_layers, sizeof(int));
-
-    layer_sizes[0] = param->feature_size - 1;
-    layer_sizes[n_layers-1] = param->output_layer_size;
-
-    int i;
-    for (i = 1; i < n_layers-1 ; i++)
-        layer_sizes[i] = param->hidden_layers_size[i-1];
 
     // Create memory for arrays of inputs to the layers
     double** layer_inputs = (double**)calloc(n_layers, sizeof(double*));
 
+    int i;
     for (i = 0; i < n_layers; i++)
         layer_inputs[i] = (double*)calloc(layer_sizes[i], sizeof(double));
 
@@ -172,6 +163,4 @@ void mlp_classifier(parameters* param) {
         free(layer_inputs[i]);
 
     free(layer_inputs);
-
-    free(layer_sizes);
 }

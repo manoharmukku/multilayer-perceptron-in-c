@@ -27,37 +27,14 @@ void initialize_weights(int n_layers, int* layer_sizes) {
     free(epsilon);
 }
 
-void mlp_trainer(parameters* param) {
+void mlp_trainer(parameters* param, int* layer_sizes) {
+    // Total number of layers
     int n_layers = param->n_hidden + 2;
-
-    // Save the sizes of layers in an array
-    int* layer_sizes = (int*)calloc(n_layers, sizeof(int));
-
-    layer_sizes[0] = param->feature_size - 1;
-    layer_sizes[n_layers-1] = param->output_layer_size;
-
-    int i;
-    for (i = 1; i < n_layers-1 ; i++)
-        layer_sizes[i] = param->hidden_layers_size[i-1];
-
-    // Create memory for the weight matrices between layers
-    // weight is a pointer to the array of 2D arrays between the layers
-    // Global variable
-    weight = (double***)calloc(n_layers - 1, sizeof(double**));
-
-    // Each 2D array between two layers i and i+1 is of size ((layer_size[i]+1) x layer_size[i+1])
-    // The weight matrix includes weights for the bias terms too
-    for (i = 0; i < n_layers-1; i++)
-        weight[i] = (double**)calloc(layer_sizes[i]+1, sizeof(double*));
-
-    int j;
-    for (i = 0; i < n_layers-1; i++)
-        for (j = 0; j < layer_sizes[i]+1; j++)
-            weight[i][j] = (double*)calloc(layer_sizes[i+1], sizeof(double));
 
     // Create memory for arrays of inputs to the layers
     double** layer_inputs = (double**)calloc(n_layers, sizeof(double*));
 
+    int i;
     for (i = 0; i < n_layers; i++)
         layer_inputs[i] = (double*)calloc(layer_sizes[i], sizeof(double));
 
@@ -94,6 +71,4 @@ void mlp_trainer(parameters* param) {
         free(layer_inputs[i]);
 
     free(layer_inputs);
-
-    free(layer_sizes);
 }

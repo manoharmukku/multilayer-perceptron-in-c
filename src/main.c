@@ -154,28 +154,50 @@ int main(int argc, char** argv) {
     // Read the test dataset from the csv into the 2D array
     read_csv(test_filename, param->test_sample_size, param->feature_size, param->data_test);
 
-    // Train the neural network on the train data
-    mlp_trainer(param);
+    // Total number of layers
+    int n_layers = param->n_hidden + 2;
 
-    // Classify the test data using the trained parameter weights
-    mlp_classifier(param);
+    // Save the sizes of layers in an array
+    int* layer_sizes = (int*)calloc(n_layers, sizeof(int));
 
-    // Free the memory allocated in Heap
-    for (i = 0; i < param->feature_size; i++)
-        free(weight[0][i]);
+    layer_sizes[0] = param->feature_size - 1;
+    layer_sizes[n_layers-1] = param->output_layer_size;
+
+    for (i = 1; i < n_layers-1 ; i++)
+        layer_sizes[i] = param->hidden_layers_size[i-1];
+
+    // Create memory for the weight matrices between layers
+    // weight is a pointer to the array of 2D arrays between the layers
+    // Global variable
+    weight = (double***)calloc(n_layers - 1, sizeof(double**));
+
+    // Each 2D array between two layers i and i+1 is of size ((layer_size[i]+1) x layer_size[i+1])
+    // The weight matrix includes weights for the bias terms too
+    for (i = 0; i < n_layers-1; i++)
+        weight[i] = (double**)calloc(layer_sizes[i]+1, sizeof(double*));
 
     int j;
-    for (i = 1; i < param->n_hidden; i++)
-        for (j = 0; j < param->hidden_layers_size[i-1]+1; j++)
+    for (i = 0; i < n_layers-1; i++)
+        for (j = 0; j < layer_sizes[i]+1; j++)
+            weight[i][j] = (double*)calloc(layer_sizes[i+1], sizeof(double));
+
+    // Train the neural network on the train data
+    mlp_trainer(param, layer_sizes);
+
+    // Classify the test data using the trained parameter weights
+    mlp_classifier(param, layer_sizes);
+
+    // Free the memory allocated in Heap
+    for (i = 0; i < n_layers-1; i++)
+        for (j = 0; j < layer_sizes[i]+1; j++)
             free(weight[i][j]);
 
-    for (i = 0; i < param->output_layer_size+1; i++)
-        free(weight[param->n_hidden][i]);
-
-    for (i = 0; i < param->n_hidden+1; i++)
+    for (i = 0; i < n_layers-1; i++)
         free(weight[i]);
 
     free(weight);
+
+    free(layer_sizes);
 
     for (i = 0; i < param->train_sample_size; i++)
         free(param->data_train[i]);
