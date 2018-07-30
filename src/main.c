@@ -5,7 +5,9 @@ Desc: Multilayer Perceptron implementation in C
 GitHub: https://github.com/manoharmukku/multilayer-perceptron-in-c
 */
 
-#include "main.h"
+#include "mlp_trainer.h"
+#include "mlp_classifier.h"
+#include "read_csv.h"
 
 int main(int argc, char** argv) {
     /*
