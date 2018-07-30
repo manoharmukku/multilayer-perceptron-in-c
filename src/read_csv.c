@@ -12,7 +12,7 @@ void read_csv(char* filename, int rows, int cols, double** data) {
     // Open file and perform sanity check
     FILE* fp = fopen(filename, "r");
     if (NULL == fp) {
-        printf("Error opening %s file\n", filename);
+        printf("Error opening %s file\nMake sure you mentioned the path correctly\n", filename);
         exit(0);
     }
 
