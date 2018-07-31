@@ -3,7 +3,6 @@ Author: Manohar Mukku
 Date: 18.07.2018
 Desc: Read .csv file into a 2D array
 GitHub: https://github.com/manoharmukku/multilayer-perceptron-in-c
-Courtesy of amirmasoudabdol on GitHub: https://gist.github.com/amirmasoudabdol/f1efda29760b97f16e0e
 */
 
 #include "read_csv.h"
