@@ -36,7 +36,7 @@ Then, go to the cloned directory, and compile the project as below:
 Then run the program with your desired parameters as below:
 
 ```
-~$ ./MLP 3 4,5,5 sigmoid,relu,tanh 3 softmax 0.01 10000 data_train.csv 1096 5 data_test.csv 275 5
+~$ ./MLP 3 4,5,5 softmax,relu,tanh 1 sigmoid 0.01 10000 data/data_train.csv 1096 5 data/data_test.csv 275 5
 ```
 
 Program parameters explanation:
@@ -47,11 +47,11 @@ Program parameters explanation:
 
 > Argument 2: Number of units in each hidden layer from left to right separated by comma (no spaces in-between) _Ex:_ __4,5,5__
 
-> Argument 3: Activation function of each hidden layer from left to right separated by comma (no spaces in-between) _Ex:_ __sigmoid,relu,tanh__
+> Argument 3: Activation function of each hidden layer from left to right separated by comma (no spaces in-between) _Ex:_ __softmax,relu,tanh__
 
 > Argument 4: Number of units in output layer (Specify 1 for binary classification and k for k-class multi-class classification) _Ex:_ __1__
 
-> Argument 5: Output activation function _Ex:_ __softmax__
+> Argument 5: Output activation function _Ex:_ __sigmoid__
 
 > Argument 6: Learning rate parameter _Ex:_ __0.01__
 
