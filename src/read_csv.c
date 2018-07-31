@@ -12,19 +12,20 @@ void read_csv(char* filename, int rows, int cols, double** data) {
     // Open file and perform sanity check
     FILE* fp = fopen(filename, "r");
     if (NULL == fp) {
-        printf("Error opening %s file\nMake sure you mentioned the path correctly\n", filename);
+        printf("Error opening %s file. Make sure you mentioned the file path correctly\n", filename);
         exit(0);
     }
 
     // Create memory to read a line/row from the file
     char* line = (char*)malloc(MAX_LINE_SIZE * sizeof(char));
 
-    // Read the file and save it in the matrix 'data'
+    // Read the file line by line and save it in the matrix 'data'
     int i, j;
     for (i = 0; fgets(line, MAX_LINE_SIZE, fp) && i < rows; i++) {
-        char* tok;
-        for (j = 0, tok = strtok(line, "\t"); tok && *tok; j++, tok = strtok(NULL, "\t\n")) {
+        char* tok = strtok(line, ",");
+        for (j = 0; tok && *tok; j++) {
             data[i][j] = atof(tok);
+            tok = strtok(NULL, ",\n");
         }
     }
 
