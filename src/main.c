@@ -184,10 +184,14 @@ int main(int argc, char** argv) {
             param->weight[i][j] = (double*)calloc(layer_sizes[i+1], sizeof(double));
 
     // Train the neural network on the train data
+    printf("Training........\n");
     mlp_trainer(param, layer_sizes);
+    printf("Training done........\n");
 
     // Classify the test data using the trained parameter weights
+    printf("Classifying........\n");
     mlp_classifier(param, layer_sizes);
+    printf("Classifying done. See generated output file\n");
 
     // Free the memory allocated in Heap
     for (i = 0; i < n_layers-1; i++)
