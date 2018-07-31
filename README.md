@@ -57,13 +57,13 @@ Program parameters explanation:
 
 > Argument 7: Maximum number of iterations to run during training _Ex:_ __10000__
 
-> Argument 8: Name of the csv file containing the train dataset _Ex:_ __data_train.csv__
+> Argument 8: Path of the csv file containing the train dataset _Ex:_ __data/data_train.csv__
 
 > Argument 9: Number of rows in the train dataset (Number of samples) _Ex:_ __1096__
 
 > Argument 10: Number of columns in the train dataset (Number of input features + 1 (output variable)). The output variable should always be in the last column _Ex:_ __5__
 
-> Argument 11: Name of the csv file containing the test dataset _Ex:_ __data_test.csv__
+> Argument 11: Path of the csv file containing the test dataset _Ex:_ __data/data_test.csv__
 
 > Argument 12: Number of rows in the test dataset (Number of samples) _Ex:_ __275__
 
