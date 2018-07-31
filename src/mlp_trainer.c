@@ -50,6 +50,7 @@ void mlp_trainer(parameters* param, int* layer_sizes) {
     // Train the MLP
     int training_example;
     for (i = 0; i < param->n_iterations_max; i++) {
+        printf("Iteration %d of %d(max)\r", i+1, param->n_iterations_max);
         for (training_example = 0; training_example < param->train_sample_size; training_example++) {
             // Perform forward propagation on the jth training example
             forward_propagation(param, training_example, n_layers, layer_sizes, layer_inputs, layer_outputs);

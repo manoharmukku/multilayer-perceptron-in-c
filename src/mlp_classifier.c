@@ -91,6 +91,7 @@ void mlp_classifier(parameters* param, int* layer_sizes) {
     // Classify the test dataset on the test samples
     int test_example;
     for (test_example = 0; test_example < param->test_sample_size; test_example++) {
+        printf("Test example %d of %d\r", test_example+1, param->test_sample_size);
         // Fill the input layer's input and output (both are equal) from data_test matrix for the given test example
         layer_outputs[0][0] = 1; // Bias term of input layer
         for (i = 0; i < param->feature_size-1; i++)
