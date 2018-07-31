@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "read_csv.h"
+#include "write_csv.h"
 #include "parameters.h"
 
 void mlp_classifier(parameters*, int*);

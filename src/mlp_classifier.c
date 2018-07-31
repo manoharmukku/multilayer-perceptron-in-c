@@ -82,6 +82,11 @@ void mlp_classifier(parameters* param, int* layer_sizes) {
     for (i = 0; i < n_layers; i++)
         layer_outputs[i] = (double*)calloc(layer_sizes[i]+1, sizeof(double));
 
+    // Create memory to store final outputs
+    double** final_output = (double**)calloc(param->test_sample_size, sizeof(double*));
+    for (i = 0; i < param->test_sample_size; i++)
+        final_output[i] = (double*)calloc(param->output_layer_size, sizeof(double));
+
 
     // Classify the test dataset on the test samples
     int test_example;
@@ -150,10 +155,20 @@ void mlp_classifier(parameters* param, int* layer_sizes) {
 
         // Save the computed output into a output matrix
         // Final computed output is present in layer_outputs[n_layers-1] from index 1
-
+        for (i = 0; i < param->output_layer_size; i++)
+            final_output[test_example][i] = layer_outputs[n_layers-1][i+1];
     }
 
+    // Write the final output into a csv file
+    char* output_file_name = "data/data_test_output.csv";
+    write_csv(output_file_name, param->test_sample_size, param->output_layer_size, final_output);
+
     // Free the memory allocated in Heap
+    for (i = 0; i < param->test_sample_size; i++)
+        free(final_output[i]);
+
+    free(final_output);
+
     for (i = 0; i < n_layers; i++)
         free(layer_outputs[i]);
 
