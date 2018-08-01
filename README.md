@@ -71,14 +71,14 @@ Program parameters explanation:
 
 ## Dataset format:
 
-1. The datasets should be in .csv format
-1. All the feature values should be real (numerical)
+1. The datasets should be in __.csv format__
+1. All the __feature values__ should be __real__ (numerical)
 1. There should _not_ be any header row
 1. There should _not_ be any index column specifying the row number
-1. The output variable should always be in the last column
-1. If binary classification, the output variable can take values from 0 or 1 only
-1. If multi-class classification with k-classes, the output variable can take values from 1, 2, 3,..., k only
-1. Make sure to specify the correct paths of the data files in the arguments
+1. The __output variable__ should always be in the __last column__
+1. If __binary classification__, the __output variable__ can take values from __0 or 1 only__
+1. If __multi-class classification__ with k-classes, the __output variable__ can take values from __1, 2, 3,..., k only__
+1. Make sure to __specify the correct paths__ of the data files in the arguments
 
 Example dataset used for training and testing: [Banknote authentication dataset from ULI ML Repository](https://archive.ics.uci.edu/ml/datasets/banknote+authentication)
 
