@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
     */
 
     // Sanity check of command line arguments
-    if (argc <= 1) {
+    if (argc != 14) {
         // Print help for execution syntax
         printf("\nExecution syntax:\n");
         printf("-----------------\n");
