@@ -29,9 +29,25 @@ int main(int argc, char** argv) {
 
     // Sanity check of command line arguments
     if (argc <= 1) {
-        printf("Usage: ./MLP \'No. of hidden layers\' \'Size of each hidden layer separated by comma (no space in-between)\'\n \
-            \'Hidden activations separated by comma (no space in-between)\' \'Size of output layer\' \'Output activation\' \n \
-            \'Learning rate\' \'Max iterations\' \'Train_filename\' \'Train_rows\' \'Train_cols\' \'Test_filename\' \'Test_rows\' \'Test_cols\'\n");
+        // Print help for execution syntax
+        printf("\nExecution syntax:\n");
+        printf("-----------------\n");
+        printf("Argument 0: Executable file name Ex: ./MLP \n");
+        printf("Argument 1: Number of hidden layers Ex: 3 \n");
+        printf("Argument 2: Number of units in each hidden layer from left to right separated by comma (no spaces in-between) Ex: 4,5,5 \n");
+        printf("Argument 3: Activation function of each hidden layer from left to right separated by comma (no spaces in-between) Ex: softmax,relu,tanh \n");
+        printf("Argument 4: Number of units in output layer (Specify 1 for binary classification and k for k-class multi-class classification) Ex: 1 \n");
+        printf("Argument 5: Output activation function Ex: sigmoid \n");
+        printf("Argument 6: Learning rate parameter Ex: 0.01 \n");
+        printf("Argument 7: Maximum number of iterations to run during training Ex: 10000 \n");
+        printf("Argument 8: Path of the csv file containing the train dataset Ex: data/data_train.csv \n");
+        printf("Argument 9: Number of rows in the train dataset (Number of samples) Ex: 1096 \n");
+        printf("Argument 10: Number of columns in the train dataset (Number of input features + 1 (output variable)). The output variable should always be in the last column Ex: 5 \n");
+        printf("Argument 11: Path of the csv file containing the test dataset Ex: data/data_test.csv \n");
+        printf("Argument 12: Number of rows in the test dataset (Number of samples) Ex: 275 \n");
+        printf("Argument 13: Number of columns in the test dataset (Number of input features + 1 (output variable)). The output variable should always be in the last column Ex: 5 \n\n");
+        printf("Example:\n--------\n~$ ./MLP 3 4,5,5 softmax,relu,tanh 1 sigmoid 0.01 10000 data/data_train.csv 1096 5 data/data_test.csv 275 5\n\n");
+
         exit(0);
     }
 
