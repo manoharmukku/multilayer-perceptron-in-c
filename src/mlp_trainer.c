@@ -59,6 +59,8 @@ void mlp_trainer(parameters* param, int* layer_sizes) {
     initialize_weights(param, n_layers, layer_sizes);
 
     int* indices = (int*)calloc(param->train_sample_size, sizeof(int));
+    for (i = 0; i < param->train_sample_size; i++)
+        indices[i] = i;
 
     // Train the MLP
     int training_example, j;
