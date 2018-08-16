@@ -93,3 +93,4 @@ Example dataset used for training and testing: [Banknote authentication dataset 
 * https://jamesmccaffrey.wordpress.com/2017/06/23/two-ways-to-deal-with-the-derivative-of-the-relu-function/
 * https://eli.thegreenplace.net/2016/the-softmax-function-and-its-derivative
 * https://theclevermachine.wordpress.com/2014/09/08/derivation-derivatives-for-common-neural-network-activation-functions/
+* https://www.geeksforgeeks.org/shuffle-a-given-array/
