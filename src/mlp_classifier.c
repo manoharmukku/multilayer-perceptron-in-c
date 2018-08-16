@@ -160,15 +160,56 @@ void mlp_classifier(parameters* param, int* layer_sizes) {
             final_output[test_example][i] = layer_outputs[n_layers-1][i+1];
     }
 
-    // Threshold the final output
-    for (test_example = 0; test_example < param->test_sample_size; test_example++) {
-        for (i = 0; i < param->output_layer_size; i++) {
-            if (final_output[test_example][i] < 0.5)
-                final_output[test_example][i] = 0;
+    // Find the output class for each test example
+    if (param->output_layer_size == 1) { // Binary classification
+        for (test_example = 0; test_example < param->test_sample_size; test_example++) {
+            if (final_output[test_example][0] < 0.5)
+                final_output[test_example][0] = 0;
             else
-                final_output[test_example][i] = 1;
+                final_output[test_example][0] = 1;
         }
     }
+    else { // Multi-class classification
+        for (test_example = 0; test_example < param->test_sample_size; test_example++) {
+            double max = -1;
+            int max_class;
+            for (i = 0; i < param->output_layer_size; i++) {
+                if (final_output[test_example][i] > max) {
+                    max = final_output[test_example][i];
+                    max_class = i+1;
+                }
+            }
+        }
+    }
+
+    // Calculate the confusion matrix
+    int true_positive = 0, true_negative = 0, false_positive = 0, false_negative = 0;
+    for (test_example = 0; test_example < param->test_sample_size; test_example++) {
+        if (final_output[test_example][0] == 0) {
+            if (param->data_test[test_example][param->feature_size-1] == 0)
+                ++true_negative;
+            else
+                ++false_positive;
+        }
+        else {
+            if (param->data_test[test_example][param->feature_size-1] == 1)
+                ++true_positive;
+            else
+                ++false_negative;
+        }
+    }
+    double accuracy = (double)(true_positive + true_negative) / param->test_sample_size;
+
+    // Print confusion matrix
+    printf ("\n\nConfusion matrix\n");
+    printf ("-----------------\n\n");
+
+    printf ("\t    |predicted 0\t predicted 1\n");
+    printf ("--------------------------------------------\n");
+    printf ("Actual 0    |%d\t\t%d\n\n", true_negative, false_positive);
+    printf ("Actual 1    |%d\t\t%d\n\n", false_negative, true_positive);
+
+    printf ("\nAccuracy: %.2lf\n\n", accuracy * 100);
 
     // Write the final output into a csv file
     char* output_file_name = "data/data_test_output.csv";
