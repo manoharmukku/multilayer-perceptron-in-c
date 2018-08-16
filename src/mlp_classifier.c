@@ -160,6 +160,16 @@ void mlp_classifier(parameters* param, int* layer_sizes) {
             final_output[test_example][i] = layer_outputs[n_layers-1][i+1];
     }
 
+    // Threshold the final output
+    for (test_example = 0; test_example < param->test_sample_size; test_example++) {
+        for (i = 0; i < param->output_layer_size; i++) {
+            if (final_output[test_example][i] < 0.5)
+                final_output[test_example][i] = 0;
+            else
+                final_output[test_example][i] = 1;
+        }
+    }
+
     // Write the final output into a csv file
     char* output_file_name = "data/data_test_output.csv";
     write_csv(output_file_name, param->test_sample_size, param->output_layer_size, final_output);
