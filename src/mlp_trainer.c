@@ -65,9 +65,10 @@ void mlp_trainer(parameters* param, int* layer_sizes) {
     for (i = 0; i < param->n_iterations_max; i++) {
         printf("Iteration %d of %d(max)\r", i+1, param->n_iterations_max);
         // Randomly shuffle the data
+        randomly_shuffle(arr, param->train_sample_size);
 
-
-        for (training_example = 0; training_example < param->train_sample_size; training_example++) {
+        for (j = 0; j < param->train_sample_size; j++) {
+            training_example = arr[j];
             // Perform forward propagation on the jth training example
             forward_propagation(param, training_example, n_layers, layer_sizes, layer_inputs, layer_outputs);
 
