@@ -27,7 +27,7 @@ void initialize_weights(parameters* param, int n_layers, int* layer_sizes) {
     free(epsilon);
 }
 
-void randomly_shuffle(int* arr, int n) {
+void randomly_shuffle(int* a, int n) {
     int i, j;
     srand(time(NULL));
     for (i = n-1; i > 0; i--) {
@@ -58,17 +58,17 @@ void mlp_trainer(parameters* param, int* layer_sizes) {
     // Initialize the weights
     initialize_weights(param, n_layers, layer_sizes);
 
-    int* arr = (int*)calloc(param->train_sample_size, sizeoff(int));
+    int* indices = (int*)calloc(param->train_sample_size, sizeof(int));
 
     // Train the MLP
     int training_example, j;
     for (i = 0; i < param->n_iterations_max; i++) {
         printf("Iteration %d of %d(max)\r", i+1, param->n_iterations_max);
         // Randomly shuffle the data
-        randomly_shuffle(arr, param->train_sample_size);
+        randomly_shuffle(indices, param->train_sample_size);
 
         for (j = 0; j < param->train_sample_size; j++) {
-            training_example = arr[j];
+            training_example = indices[j];
             // Perform forward propagation on the jth training example
             forward_propagation(param, training_example, n_layers, layer_sizes, layer_inputs, layer_outputs);
 
@@ -80,7 +80,7 @@ void mlp_trainer(parameters* param, int* layer_sizes) {
     }
 
     // Free the memory allocated in Heap
-    free(arr);
+    free(indices);
 
     for (i = 0; i < n_layers; i++)
         free(layer_outputs[i]);
