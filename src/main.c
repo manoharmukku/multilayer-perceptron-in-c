@@ -209,7 +209,7 @@ int main(int argc, char** argv) {
     printf("Classifying:\n");
     printf("------------\n");
     mlp_classifier(param, layer_sizes);
-    printf("\nDone.\nOutput file generated\n");
+    //printf("\nDone.\nOutput file generated\n");
 
     // Free the memory allocated in Heap
     for (i = 0; i < n_layers-1; i++)
